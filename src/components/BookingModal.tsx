@@ -285,7 +285,7 @@ Please confirm if this slot is available.`
               <button
                 type="button"
                 onClick={() => setStep((prev) => (prev - 1) as any)}
-                className="p-1.5 -ml-1 rounded-lg text-[#1E1E1E] hover:bg-[#0F0F10]/10 min-h-[44px] min-w-[44px] inline-flex items-center justify-center transition-colors"
+                className="p-1.5 -ml-1 rounded-lg text-[#1E1E1E] hover:bg-[#0F0F10]/10 min-h-[48px] min-w-[48px] inline-flex items-center justify-center transition-colors"
                 aria-label="Go to previous step"
               >
                 <ArrowLeft className="w-5 h-5" />
@@ -315,7 +315,7 @@ Please confirm if this slot is available.`
           <button
             type="button"
             onClick={closeBooking}
-            className="p-2 min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-lg text-[#666666] hover:text-[#0F0F10] hover:bg-[#0F0F10]/5 transition-colors"
+            className="p-2 min-h-[48px] min-w-[48px] inline-flex items-center justify-center rounded-lg text-[#666666] hover:text-[#0F0F10] hover:bg-[#0F0F10]/5 transition-colors"
             aria-label="Close booking modal"
           >
             <X className="w-5 h-5" />
@@ -671,7 +671,7 @@ Please confirm if this slot is available.`
                 <button
                   type="button"
                   onClick={closeBooking}
-                  className="w-full py-3.5 px-6 rounded-xl bg-[#0F0F10] text-white hover:bg-[#252528] font-sans font-semibold text-[15px] tracking-[0.02em] min-h-[44px] transition-colors"
+                  className="w-full py-3.5 px-6 rounded-xl bg-[#0F0F10] text-white hover:bg-[#252528] font-sans font-semibold text-[15px] tracking-[0.02em] min-h-[48px] transition-colors"
                 >
                   Done
                 </button>

@@ -11,6 +11,7 @@ export const StylistSection = () => {
   const photoContainerRef = useRef<HTMLDivElement>(null)
   const shouldReduceMotion = useReducedMotion()
   const [isDesktop, setIsDesktop] = useState(false)
+  const [showMoreBio, setShowMoreBio] = useState(false)
 
   useEffect(() => {
     const checkDesktop = () => setIsDesktop(window.innerWidth >= 768)
@@ -36,12 +37,18 @@ export const StylistSection = () => {
 
   const raheesBookingUrl = getWhatsAppBookingLink(undefined, undefined, 'Rahees')
 
+  const stylistSrcSet = `
+    https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fm=webp&fit=crop&w=480&q=80 480w,
+    https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fm=webp&fit=crop&w=800&q=80 800w,
+    https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fm=webp&fit=crop&w=1200&q=80 1200w
+  `.trim()
+
   return (
-    <section id="stylist" className="py-16 md:py-24 bg-white border-t border-[#0F0F10]/10">
+    <section id="stylist" className="py-16 md:py-24 bg-white border-t border-[#0F0F10]/10 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionReveal>
           {/* Section Heading */}
-          <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
             <RevealItem>
               <span className="eyebrow-label block mb-3">MEET THE STYLIST</span>
             </RevealItem>
@@ -61,19 +68,22 @@ export const StylistSection = () => {
           <RevealItem>
             <div className="max-w-4xl mx-auto bg-[#FAF8F5] rounded-2xl border border-[#0F0F10]/10 overflow-hidden shadow-md">
               <div className="grid grid-cols-1 md:grid-cols-12 gap-0">
-                {/* Stylist Photo Placeholder with subtle Parallax */}
+                {/* Stylist Photo Placeholder with subtle Parallax on desktop */}
                 <div
                   ref={photoContainerRef}
-                  className="md:col-span-5 relative bg-[#1E1E22] min-h-[340px] md:min-h-full flex flex-col justify-end overflow-hidden"
+                  className="md:col-span-5 relative bg-[#1E1E22] min-h-[300px] md:min-h-full flex flex-col justify-end overflow-hidden"
                 >
                   <motion.img
                     style={{
                       y: isDesktop && !shouldReduceMotion ? yParallax : 0,
                     }}
-                    src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80"
+                    src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fm=webp&fit=crop&w=800&q=80"
+                    srcSet={stylistSrcSet}
+                    sizes="(max-width: 768px) 100vw, 500px"
                     alt="Rahees - Master Stylist at Hair Fashionic"
                     className="absolute inset-0 w-full h-[120%] object-cover object-top filter grayscale contrast-125 opacity-70"
                     loading="lazy"
+                    decoding="async"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F10] via-[#0F0F10]/40 to-transparent pointer-events-none"></div>
 
@@ -83,7 +93,7 @@ export const StylistSection = () => {
                   </div>
 
                   {/* Stylist Name overlay on mobile */}
-                  <div className="relative p-6 z-10">
+                  <div className="relative p-5 sm:p-6 z-10">
                     <span className="eyebrow-label text-[11px] block text-[#C9A227]">
                       Senior Hairdresser
                     </span>
@@ -111,9 +121,40 @@ export const StylistSection = () => {
                       Master Hair Stylist & Grooming Specialist
                     </p>
 
-                    <p className="mt-4 text-[16px] md:text-[17px] leading-[1.65] text-[#666666] font-sans">
-                      With years of dedicated craft in East Delhi, Rahees takes time to understand your hair texture, face shape, and lifestyle before making the first cut. Clients consistently praise his humility, patience, and artistry.
-                    </p>
+                    {/* Trim phone text: max 3 short lines on mobile, expandable behind "Read more" */}
+                    <div className="mt-4 font-sans text-[#666666]">
+                      {/* Mobile version with Read more */}
+                      <div className="block md:hidden text-[15px] leading-[1.6]">
+                        {showMoreBio ? (
+                          <p>
+                            With years of dedicated craft in East Delhi, Rahees takes time to understand your hair texture, face shape, and lifestyle before making the first cut. Clients consistently praise his humility, patience, and artistry.
+                            <button
+                              type="button"
+                              onClick={() => setShowMoreBio(false)}
+                              className="text-[#C9A227] font-semibold text-xs ml-1 inline-flex items-center min-h-[48px] py-1 underline cursor-pointer"
+                            >
+                              Show less
+                            </button>
+                          </p>
+                        ) : (
+                          <p>
+                            With years of dedicated craft in East Delhi, Rahees takes time to understand your hair texture and lifestyle before making the first cut.
+                            <button
+                              type="button"
+                              onClick={() => setShowMoreBio(true)}
+                              className="text-[#C9A227] font-semibold text-xs ml-1 inline-flex items-center min-h-[48px] py-1 underline cursor-pointer"
+                            >
+                              Read more
+                            </button>
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Desktop version (1024px+ / md+) */}
+                      <p className="hidden md:block text-[16px] md:text-[17px] leading-[1.65]">
+                        With years of dedicated craft in East Delhi, Rahees takes time to understand your hair texture, face shape, and lifestyle before making the first cut. Clients consistently praise his humility, patience, and artistry.
+                      </p>
+                    </div>
 
                     {/* Real client mention callout */}
                     <div className="mt-5 p-4 rounded-xl bg-white border border-[#C9A227]/30 shadow-sm">
@@ -141,7 +182,7 @@ export const StylistSection = () => {
                     </div>
                   </div>
 
-                  {/* Direct Booking with Rahees */}
+                  {/* Direct Booking with Rahees (min 48px tap target) */}
                   <div className="mt-8 pt-6 border-t border-[#0F0F10]/10">
                     <motion.a
                       whileTap={{ scale: 0.97 }}
@@ -150,7 +191,7 @@ export const StylistSection = () => {
                         e.preventDefault()
                         openBooking({ stylistName: 'Rahees', serviceName: 'Haircut (Style & Finish)' })
                       }}
-                      className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 min-h-[44px] rounded-xl bg-[#0F0F10] hover:bg-[#252528] text-white font-sans font-semibold text-[15px] tracking-[0.02em] transition-all shadow-sm cursor-pointer"
+                      className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 min-h-[48px] rounded-xl bg-[#0F0F10] hover:bg-[#252528] text-white font-sans font-semibold text-[15px] tracking-[0.02em] transition-all shadow-sm cursor-pointer btn-gold-shine"
                     >
                       <MessageCircle className="w-4 h-4 text-[#C9A227]" />
                       <span>Book with Rahees on WhatsApp</span>

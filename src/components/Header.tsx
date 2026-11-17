@@ -100,7 +100,7 @@ export const Header = () => {
                   e.preventDefault()
                   openBooking()
                 }}
-                className="btn-gold-shine p-2 min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-lg bg-[#C9A227] text-[#0F0F10] font-sans font-semibold cursor-pointer"
+                className="btn-gold-shine p-2 min-h-[48px] min-w-[48px] inline-flex items-center justify-center rounded-lg bg-[#C9A227] text-[#0F0F10] font-sans font-semibold cursor-pointer"
                 aria-label="Book on WhatsApp"
               >
                 <MessageCircle className="w-5 h-5 fill-current" />
@@ -108,7 +108,7 @@ export const Header = () => {
               <button
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}
-                className="p-2 min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-lg text-[#FAF8F5] hover:text-[#C9A227] focus:outline-none focus:ring-2 focus:ring-[#C9A227]"
+                className="p-2 min-h-[48px] min-w-[48px] inline-flex items-center justify-center rounded-lg text-[#FAF8F5] hover:text-[#C9A227] focus:outline-none focus:ring-2 focus:ring-[#C9A227]"
                 aria-expanded={isOpen}
                 aria-label="Toggle navigation menu"
               >
@@ -141,20 +141,20 @@ export const Header = () => {
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="p-2 min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-lg text-[#FAF8F5]/70 hover:text-white"
+                  className="p-2 min-h-[48px] min-w-[48px] inline-flex items-center justify-center rounded-lg text-[#FAF8F5]/70 hover:text-white"
                   aria-label="Close menu"
                 >
                   <X className="w-6 h-6" />
                 </button>
               </div>
 
-              <nav className="mt-8 flex flex-col gap-4">
+              <nav className="mt-8 flex flex-col gap-3">
                 {navLinks.map((link) => (
                   <a
                     key={link.label}
                     href={link.href}
                     onClick={handleNavClick}
-                    className="flex items-center justify-between text-base font-semibold text-[#FAF8F5]/90 hover:text-[#C9A227] py-3 px-2 rounded-lg hover:bg-white/5 transition-colors"
+                    className="flex items-center justify-between text-base font-semibold text-[#FAF8F5]/90 hover:text-[#C9A227] py-3.5 px-3 min-h-[48px] rounded-lg hover:bg-white/5 transition-colors"
                   >
                     <span>{link.label}</span>
                     <span className="text-xs text-[#C9A227]">→</span>
@@ -183,17 +183,17 @@ export const Header = () => {
                   handleNavClick()
                   openBooking()
                 }}
-                className="btn-gold-shine w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 min-h-[44px] rounded-xl bg-[#C9A227] text-[#0F0F10] font-sans font-semibold text-[15px] tracking-[0.02em] transition-colors cursor-pointer"
+                className="btn-gold-shine w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 min-h-[48px] rounded-xl bg-[#C9A227] text-[#0F0F10] font-sans font-semibold text-[15px] tracking-[0.02em] transition-colors cursor-pointer"
               >
                 <MessageCircle className="w-5 h-5 fill-current" />
                 <span>Book on WhatsApp</span>
               </motion.a>
               <a
                 href={`tel:${SALON_INFO.rawPhone}`}
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[44px] rounded-xl border border-white/20 text-[#FAF8F5] hover:bg-white/5 font-sans font-semibold text-[15px] tracking-[0.02em] transition-colors"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 min-h-[48px] rounded-xl border border-white/20 text-[#FAF8F5] hover:bg-white/5 font-sans font-semibold text-[15px] tracking-[0.02em] transition-colors"
               >
                 <Phone className="w-4 h-4" />
-                <span>Direct Call</span>
+                <span>Call Salon</span>
               </a>
             </div>
           </div>

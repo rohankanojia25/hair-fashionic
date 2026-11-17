@@ -170,6 +170,17 @@
   }
 }
 
+/* Utility: hide scrollbars on swipe rows while preserving swipe behavior */
+.no-scrollbar::-webkit-scrollbar,
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar,
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* Gold marquee strip animation */
 @keyframes marquee-scroll {
   0% {

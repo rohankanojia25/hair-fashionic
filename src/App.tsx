@@ -59,7 +59,7 @@ export function App() {
         {/* 1. Header: wordmark "Hair Fashionic", nav, "Book Now" */}
         <Header />
 
-        <main className="flex-grow pb-16 md:pb-0">
+        <main className="flex-grow pb-[calc(64px+env(safe-area-inset-bottom,0px)+1.5rem)] md:pb-0">
           {/* 2. Hero: headline "Rated 5.0 by 50 clients in Krishna Nagar", subline, CTAs, photo [SALON PHOTO] */}
           <Hero />
 

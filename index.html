@@ -27,6 +27,16 @@
       rel="stylesheet"
     />
 
+    <!-- Preload Hero LCP Image for fast 4G rendering -->
+    <link
+      rel="preload"
+      as="image"
+      href="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fm=webp&fit=crop&w=800&q=80"
+      imagesrcset="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fm=webp&fit=crop&w=480&q=80 480w, https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fm=webp&fit=crop&w=800&q=80 800w, https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fm=webp&fit=crop&w=1200&q=80 1200w"
+      imagesizes="(max-width: 768px) 100vw, 800px"
+      fetchpriority="high"
+    />
+
     <!-- LocalBusiness Schema (JSON-LD) -->
     <script type="application/ld+json">
     {

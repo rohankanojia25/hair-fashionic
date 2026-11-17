@@ -83,7 +83,7 @@ export const TrustStrip = () => {
                 e.preventDefault()
                 openBooking()
               }}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[44px] rounded-xl bg-[#0F0F10] text-white hover:bg-[#252528] font-sans font-semibold text-[15px] tracking-[0.02em] transition-colors cursor-pointer btn-gold-shine"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 min-h-[48px] rounded-xl bg-[#0F0F10] text-white hover:bg-[#252528] font-sans font-semibold text-[15px] tracking-[0.02em] transition-colors cursor-pointer btn-gold-shine"
             >
               <MessageCircle className="w-4 h-4 text-[#C9A227]" />
               <span>Book on WhatsApp</span>

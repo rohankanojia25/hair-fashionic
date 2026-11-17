@@ -149,14 +149,14 @@ export const ReviewsSection = () => {
               <button
                 type="button"
                 onClick={handlePrev}
-                className="p-2 rounded-full border border-[#0F0F10]/10 bg-white hover:bg-[#0F0F10] text-[#0F0F10] hover:text-[#C9A227] transition-colors shadow-sm cursor-pointer"
+                className="min-h-[48px] min-w-[48px] inline-flex items-center justify-center rounded-full border border-[#0F0F10]/10 bg-white hover:bg-[#0F0F10] text-[#0F0F10] hover:text-[#C9A227] transition-colors shadow-sm cursor-pointer"
                 aria-label="Previous review"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
 
-              {/* Dots Indicator */}
-              <div className="flex items-center gap-2">
+              {/* Dots Indicator with 48px tap targets */}
+              <div className="flex items-center gap-1">
                 {REVIEWS.map((_, idx) => (
                   <button
                     key={idx}
@@ -165,20 +165,24 @@ export const ReviewsSection = () => {
                       setDirection(idx > currentIndex ? 1 : -1)
                       setCurrentIndex(idx)
                     }}
-                    className={`h-2.5 rounded-full transition-all duration-300 min-w-[10px] cursor-pointer ${
-                      idx === currentIndex
-                        ? 'w-8 bg-[#C9A227]'
-                        : 'w-2.5 bg-[#0F0F10]/20 hover:bg-[#0F0F10]/40'
-                    }`}
+                    className="min-h-[48px] min-w-[36px] inline-flex items-center justify-center cursor-pointer"
                     aria-label={`Go to review ${idx + 1}`}
-                  />
+                  >
+                    <span
+                      className={`h-2.5 rounded-full transition-all duration-300 block ${
+                        idx === currentIndex
+                          ? 'w-8 bg-[#C9A227]'
+                          : 'w-2.5 bg-[#0F0F10]/20 hover:bg-[#0F0F10]/40'
+                      }`}
+                    />
+                  </button>
                 ))}
               </div>
 
               <button
                 type="button"
                 onClick={handleNext}
-                className="p-2 rounded-full border border-[#0F0F10]/10 bg-white hover:bg-[#0F0F10] text-[#0F0F10] hover:text-[#C9A227] transition-colors shadow-sm cursor-pointer"
+                className="min-h-[48px] min-w-[48px] inline-flex items-center justify-center rounded-full border border-[#0F0F10]/10 bg-white hover:bg-[#0F0F10] text-[#0F0F10] hover:text-[#C9A227] transition-colors shadow-sm cursor-pointer"
                 aria-label="Next review"
               >
                 <ChevronRight className="w-5 h-5" />

@@ -31,7 +31,7 @@ export const SectionBookingCta = ({
         <a
           href={link}
           onClick={handleBookingClick}
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[44px] rounded-xl bg-[#0F0F10] text-[#FAF8F5] hover:bg-[#252528] font-sans font-semibold text-[15px] tracking-[0.02em] transition-all active:scale-[0.97] shadow-sm cursor-pointer btn-gold-shine"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 min-h-[48px] rounded-xl bg-[#0F0F10] text-[#FAF8F5] hover:bg-[#252528] font-sans font-semibold text-[15px] tracking-[0.02em] transition-all active:scale-[0.97] shadow-sm cursor-pointer btn-gold-shine"
         >
           <MessageCircle className="w-4 h-4 text-[#C9A227]" />
           <span>Book on WhatsApp</span>
@@ -60,7 +60,7 @@ export const SectionBookingCta = ({
         <a
           href={link}
           onClick={handleBookingClick}
-          className="inline-flex items-center justify-center gap-2 px-7 py-3.5 min-h-[44px] rounded-xl bg-[#C9A227] text-[#0F0F10] hover:bg-[#b8911f] font-sans font-semibold text-[15px] tracking-[0.02em] transition-all active:scale-[0.97] shadow-sm text-center cursor-pointer btn-gold-shine btn-pulse-gold"
+          className="inline-flex items-center justify-center gap-2 px-7 py-3.5 min-h-[48px] rounded-xl bg-[#C9A227] text-[#0F0F10] hover:bg-[#b8911f] font-sans font-semibold text-[15px] tracking-[0.02em] transition-all active:scale-[0.97] shadow-sm text-center cursor-pointer btn-gold-shine btn-pulse-gold"
         >
           <MessageCircle className="w-5 h-5 fill-current" />
           <span>Book on WhatsApp</span>
