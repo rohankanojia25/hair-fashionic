@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { X, ZoomIn, ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react'
 import { GALLERY_ITEMS, getWhatsAppBookingLink } from '../data/salonData'
-import { SectionBookingCta } from './SectionBookingCta'
 import { useBooking } from '../context/BookingContext'
 import { SectionReveal, RevealItem } from './SectionReveal'
 
@@ -23,7 +22,7 @@ export const GallerySection = () => {
     )
   }, [])
 
-  // Keyboard navigation for full-screen lightbox
+  // Keyboard navigation for lightbox
   useEffect(() => {
     if (activePhotoIndex === null) return
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -36,25 +35,22 @@ export const GallerySection = () => {
   }, [activePhotoIndex, handleNext, handlePrev])
 
   return (
-    <section id="gallery" className="py-16 md:py-24 bg-white border-t border-[#0F0F10]/10 overflow-hidden">
-      <SectionReveal className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="gallery" className="py-14 md:py-24 bg-white border-t border-[#0F0F10]/10 overflow-hidden">
+      <SectionReveal className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
         {/* Section Heading */}
-        <RevealItem className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
-          <span className="eyebrow-label block mb-3">OUR PORTFOLIO</span>
+        <RevealItem className="text-center max-w-3xl mx-auto mb-6">
+          <span className="eyebrow-label block mb-2">OUR PORTFOLIO</span>
           <h2 className="section-headline font-serif text-[#0F0F10]">
             Our <span className="italic text-[#C9A227]">Work</span> in the Chair
           </h2>
-          <p className="mt-3 text-[16px] md:text-[17px] leading-[1.65] text-[#666666] font-sans">
-            Cuts, colors, and treatments created by our stylists in Krishna Nagar. Tap any photo to expand.
+          <p className="mt-2 text-[15px] sm:text-[16px] md:text-[17px] text-[#666666] font-sans">
+            Cuts, colors, and treatments created by our stylists in Krishna Nagar.
           </p>
-          <div className="mt-2 text-xs font-sans text-amber-800 bg-amber-50 inline-block px-3 py-1 rounded-full border border-amber-200">
-            [PLACEHOLDER WORK PHOTOS - Client styles & cuts]
-          </div>
         </RevealItem>
 
-        {/* Gallery Cards: Swipe carousel on mobile (<768px), 3-col grid on desktop (1024px+) */}
+        {/* 6 Photos: Swipe row on mobile (12px gap), 3-col grid on desktop */}
         <RevealItem>
-          <div className="flex overflow-x-auto snap-x snap-mandatory gap-3.5 px-4 -mx-4 pb-4 no-scrollbar md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:px-0 md:mx-0">
+          <div className="flex overflow-x-auto snap-x snap-mandatory gap-3 px-5 -mx-5 pb-3 no-scrollbar md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:px-0 md:mx-0">
             {GALLERY_ITEMS.map((item, idx) => (
               <div
                 key={item.id}
@@ -62,7 +58,7 @@ export const GallerySection = () => {
                   setActivePhotoIndex(idx)
                   setMobileGalleryIndex(idx)
                 }}
-                className="w-[78vw] max-w-[300px] shrink-0 snap-center md:w-auto md:max-w-none md:shrink group relative rounded-xl overflow-hidden cursor-pointer bg-[#0F0F10] border border-[#0F0F10]/10 shadow-sm aspect-square"
+                className="w-[78vw] max-w-[280px] shrink-0 snap-center md:w-auto md:max-w-none md:shrink group relative rounded-xl overflow-hidden cursor-pointer bg-[#0F0F10] border border-[#0F0F10]/10 shadow-sm aspect-square"
               >
                 <img
                   src={item.imageUrl}
@@ -72,38 +68,33 @@ export const GallerySection = () => {
                   `.trim()}
                   sizes="(max-width: 768px) 80vw, 400px"
                   alt={`${item.title} - Hair Fashionic`}
-                  className="w-full h-full object-cover transition-transform duration-500 ease-out md:group-hover:scale-[1.06] filter brightness-95 will-change-transform"
+                  className="w-full h-full object-cover transition-transform duration-500 ease-out md:group-hover:scale-[1.05] filter brightness-95 will-change-transform"
                   loading="lazy"
                   decoding="async"
                 />
 
                 {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F10]/90 via-[#0F0F10]/20 to-transparent opacity-85 sm:opacity-75 sm:group-hover:opacity-95 transition-opacity pointer-events-none" />
-
-                {/* [PLACEHOLDER] tag */}
-                <div className="absolute top-2 right-2 sm:top-3 sm:right-3 bg-[#0F0F10]/80 backdrop-blur-sm text-[10px] text-[#C9A227] px-2 py-0.5 rounded font-mono font-bold">
-                  [PLACEHOLDER]
-                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F10]/85 via-transparent to-transparent opacity-80 sm:group-hover:opacity-90 transition-opacity pointer-events-none" />
 
                 {/* Caption */}
-                <div className="absolute bottom-0 inset-x-0 p-3.5 sm:p-4 text-white">
-                  <span className="eyebrow-label text-[10px] sm:text-[11px] block text-[#C9A227]">
+                <div className="absolute bottom-0 inset-x-0 p-3 sm:p-4 text-white">
+                  <span className="eyebrow-label text-[10px] block text-[#C9A227]">
                     {item.category}
                   </span>
                   <p className="card-title text-sm sm:text-base text-white line-clamp-1 mt-0.5">
                     {item.title}
                   </p>
-                  <div className="flex items-center gap-1 text-[11px] font-sans text-white/70 mt-1">
-                    <ZoomIn className="w-3.5 h-3.5" />
-                    <span>Tap to view & book this style</span>
+                  <div className="flex items-center gap-1 text-[11px] font-sans text-white/70 mt-0.5">
+                    <ZoomIn className="w-3 h-3 text-[#C9A227]" />
+                    <span>Tap to view</span>
                   </div>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Dots Indicator for Mobile Swipe Carousel (<768px) */}
-          <div className="flex md:hidden items-center justify-center gap-1 mt-3">
+          {/* Dots Indicator for Mobile Swipe (<768px) */}
+          <div className="flex md:hidden items-center justify-center gap-1 mt-2">
             {GALLERY_ITEMS.map((_, idx) => (
               <button
                 key={idx}
@@ -125,7 +116,7 @@ export const GallerySection = () => {
           </div>
         </RevealItem>
 
-        {/* Full-Screen Lightbox Modal with Swipe between Photos */}
+        {/* Full-Screen Lightbox Modal */}
         <AnimatePresence>
           {activePhoto && activePhotoIndex !== null && (
             <motion.div
@@ -136,7 +127,7 @@ export const GallerySection = () => {
               className="fixed inset-0 z-50 bg-[#0F0F10] flex flex-col justify-between"
               style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
             >
-              {/* Top Navigation Bar */}
+              {/* Top Bar */}
               <div className="h-16 px-4 flex items-center justify-between border-b border-white/10 shrink-0 z-20 bg-[#0F0F10]/95 backdrop-blur-md">
                 <div className="flex items-center gap-2">
                   <span className="text-xs font-mono font-semibold text-[#C9A227]">
@@ -148,18 +139,17 @@ export const GallerySection = () => {
                   </span>
                 </div>
 
-                {/* Close Button (min 48px tap target) */}
                 <button
                   type="button"
                   onClick={() => setActivePhotoIndex(null)}
                   className="min-h-[48px] min-w-[48px] inline-flex items-center justify-center rounded-full text-white hover:text-[#C9A227] active:bg-white/10 transition-colors cursor-pointer"
-                  aria-label="Close full-screen image"
+                  aria-label="Close image"
                 >
                   <X className="w-6 h-6" />
                 </button>
               </div>
 
-              {/* Central Photo Area with Swipe Gestures */}
+              {/* Photo View with Swipe Gestures */}
               <div className="relative flex-1 flex items-center justify-center p-2 sm:p-6 overflow-hidden">
                 <motion.div
                   key={activePhoto.id}
@@ -185,13 +175,8 @@ export const GallerySection = () => {
                     alt={activePhoto.title}
                     className="max-h-[62vh] sm:max-h-[70vh] w-auto max-w-full object-contain rounded-xl shadow-2xl"
                   />
-
-                  <div className="absolute top-3 left-3 bg-black/75 text-[#C9A227] px-2.5 py-1 rounded text-[11px] font-mono font-semibold">
-                    [WORK PHOTO PLACEHOLDER]
-                  </div>
                 </motion.div>
 
-                {/* Left Arrow Navigation (min 48px tap target) */}
                 <button
                   type="button"
                   onClick={handlePrev}
@@ -201,7 +186,6 @@ export const GallerySection = () => {
                   <ChevronLeft className="w-6 h-6" />
                 </button>
 
-                {/* Right Arrow Navigation (min 48px tap target) */}
                 <button
                   type="button"
                   onClick={handleNext}
@@ -212,16 +196,13 @@ export const GallerySection = () => {
                 </button>
               </div>
 
-              {/* Bottom Action Sheet (Style Details & Book Button) */}
-              <div className="p-4 sm:p-6 bg-[#0F0F10] border-t border-white/10 shrink-0 z-20">
+              {/* Bottom Sheet */}
+              <div className="p-4 sm:p-5 bg-[#0F0F10] border-t border-white/10 shrink-0 z-20">
                 <div className="max-w-2xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
                   <div className="text-center sm:text-left w-full sm:w-auto">
                     <h3 className="card-title text-base sm:text-lg text-white">
                       {activePhoto.title}
                     </h3>
-                    <p className="text-xs text-[#CFCAC2] mt-0.5">
-                      Swipe left/right to browse styles. Tap below to book this look.
-                    </p>
                   </div>
 
                   <a
@@ -242,14 +223,6 @@ export const GallerySection = () => {
             </motion.div>
           )}
         </AnimatePresence>
-
-        {/* Every section ends in a "Book on WhatsApp" button */}
-        <RevealItem>
-          <SectionBookingCta
-            contextName="Portfolio Gallery"
-            subtitle="Show any photo to your stylist — we recreate exact looks"
-          />
-        </RevealItem>
       </SectionReveal>
     </section>
   )

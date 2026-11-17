@@ -60,13 +60,13 @@ const STYLISTS = [
   },
   {
     id: 'sameer',
-    name: 'Sameer [PLACEHOLDER]',
+    name: 'Sameer',
     role: 'Master Grooming & Fade Specialist',
     badge: null,
   },
   {
     id: 'imran',
-    name: 'Imran [PLACEHOLDER]',
+    name: 'Imran',
     role: 'Colour & Chemical Specialist',
     badge: null,
   },
@@ -340,9 +340,6 @@ Please confirm if this slot is available.`
                 <div className="text-right">
                   <span className="text-xs text-[#666666] block">Est. Price</span>
                   <span className="text-sm font-bold text-[#0F0F10]">from Rs [PRICE]</span>
-                  <span className="text-[10px] text-amber-800 bg-amber-100 px-1 py-0.2 rounded font-mono ml-1">
-                    [PLACEHOLDER]
-                  </span>
                 </div>
               </div>
 

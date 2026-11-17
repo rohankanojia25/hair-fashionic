@@ -37,25 +37,25 @@ export const Header = () => {
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         className={`fixed top-0 inset-x-0 z-40 w-full transition-all duration-300 ${
           scrolled
-            ? 'py-3 bg-black/70 backdrop-blur-md shadow-lg border-b border-[#C9A227]/20'
-            : 'py-5 bg-transparent border-b border-transparent'
+            ? 'h-16 bg-black/85 backdrop-blur-md shadow-lg border-b border-[#C9A227]/20'
+            : 'h-16 bg-[#0F0F10]/90 md:bg-transparent border-b border-white/5 md:border-transparent'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
-            {/* Wordmark */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+          <div className="flex items-center justify-between h-full">
+            {/* Wordmark: Logo mark + Hair Fashionic (No subtitle on phones) */}
             <a
               href="#"
-              className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A227]"
+              className="flex items-center gap-2.5 sm:gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A227]"
             >
               <div className="w-9 h-9 rounded-lg bg-[#FAF8F5] flex items-center justify-center font-serif text-[#0F0F10] font-bold text-lg border border-[#C9A227]/40 shadow-sm transition-transform duration-200 group-hover:scale-105">
                 HF
               </div>
               <div className="flex flex-col">
-                <span className="font-serif text-2xl sm:text-3xl font-semibold tracking-tight text-[#FAF8F5]">
+                <span className="font-serif text-xl sm:text-2xl lg:text-3xl font-semibold tracking-tight text-[#FAF8F5]">
                   Hair Fashionic
                 </span>
-                <span className="eyebrow-label text-[10px] text-[#C9A227] -mt-0.5">
+                <span className="hidden md:block eyebrow-label text-[10px] text-[#C9A227] -mt-0.5">
                   Lal Quarter • Krishna Nagar
                 </span>
               </div>
@@ -91,24 +91,12 @@ export const Header = () => {
               </motion.a>
             </div>
 
-            {/* Mobile Hamburger Button */}
-            <div className="flex md:hidden items-center gap-2">
-              <motion.a
-                whileTap={{ scale: 0.97 }}
-                href={getWhatsAppBookingLink('Salon Booking')}
-                onClick={(e) => {
-                  e.preventDefault()
-                  openBooking()
-                }}
-                className="btn-gold-shine p-2 min-h-[48px] min-w-[48px] inline-flex items-center justify-center rounded-lg bg-[#C9A227] text-[#0F0F10] font-sans font-semibold cursor-pointer"
-                aria-label="Book on WhatsApp"
-              >
-                <MessageCircle className="w-5 h-5 fill-current" />
-              </motion.a>
+            {/* Mobile: ONLY Menu Icon on the right (WhatsApp button removed as bottom bar has it) */}
+            <div className="flex md:hidden items-center">
               <button
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}
-                className="p-2 min-h-[48px] min-w-[48px] inline-flex items-center justify-center rounded-lg text-[#FAF8F5] hover:text-[#C9A227] focus:outline-none focus:ring-2 focus:ring-[#C9A227]"
+                className="p-2 min-h-[48px] min-w-[48px] inline-flex items-center justify-center rounded-lg text-[#FAF8F5] hover:text-[#C9A227] focus:outline-none focus:ring-2 focus:ring-[#C9A227] cursor-pointer"
                 aria-expanded={isOpen}
                 aria-label="Toggle navigation menu"
               >

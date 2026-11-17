@@ -1,4 +1,4 @@
-import { MapPin, Phone, MessageCircle, Star } from 'lucide-react'
+import { MapPin, Phone, MessageCircle } from 'lucide-react'
 import { SALON_INFO, getWhatsAppBookingLink } from '../data/salonData'
 import { useBooking } from '../context/BookingContext'
 
@@ -76,17 +76,8 @@ export const Footer = () => {
             </div>
 
             <p className="text-sm text-[#CFCAC2] max-w-sm font-sans leading-relaxed">
-              East Delhi’s trusted destination for precision haircuts, rich hair colours, nourishing spas, and complete grooming. Rated 5.0 by 50 real local clients.
+              East Delhi’s trusted destination for precision haircuts, rich hair colours, nourishing spas, and complete grooming in Lal Quarter Market.
             </p>
-
-            <div className="flex items-center gap-2 pt-1 font-sans">
-              <div className="flex text-[#C9A227]">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-[#C9A227]" />
-                ))}
-              </div>
-              <span className="text-xs text-[#CFCAC2] font-medium">5.0 Star Rating on Google</span>
-            </div>
           </div>
 
           {/* Quick Links Col */}

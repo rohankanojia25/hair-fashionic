@@ -10,6 +10,7 @@ import { StylistSection } from './components/StylistSection'
 import { ReviewsSection } from './components/ReviewsSection'
 import { GallerySection } from './components/GallerySection'
 import { VisitUsSection } from './components/VisitUsSection'
+import { SectionBookingCta } from './components/SectionBookingCta'
 import { Footer } from './components/Footer'
 import { StickyMobileBar } from './components/StickyMobileBar'
 import { BookingProvider } from './context/BookingContext'
@@ -60,29 +61,32 @@ export function App() {
         <Header />
 
         <main className="flex-grow pb-[calc(64px+env(safe-area-inset-bottom,0px)+1.5rem)] md:pb-0">
-          {/* 2. Hero: headline "Rated 5.0 by 50 clients in Krishna Nagar", subline, CTAs, photo [SALON PHOTO] */}
+          {/* 2. Hero: Tagline, subline, buttons, salon photo */}
           <Hero />
 
-          {/* 3. Trust strip: 5.0 on Google, Humble staff, Hygienic tools, Near Vodafone store */}
+          {/* 3. Trust strip: Trained staff, Hygienic tools, Prime location */}
           <TrustStrip />
 
           {/* Gold marquee strip between hero and services */}
           <MarqueeStrip />
 
-          {/* 4. Services: tabs Hair/Colour/Treatments/Grooming/Skin, cards with prefilled WhatsApp booking */}
+          {/* 4. Services: swipe row of cards on mobile, grid on desktop */}
           <ServicesSection />
 
-          {/* 5. Meet our stylist: Rahees, "the stylist our clients mention by name", specialities [PLACEHOLDER] */}
+          {/* 5. Meet our stylist: Rahees, master hairdresser */}
           <StylistSection />
 
-          {/* 6. Reviews: real Google reviews with hidden first names, 5.0 rating link */}
+          {/* 6. Reviews: What our clients say (single rating display on page) */}
           <ReviewsSection />
 
-          {/* 7. Gallery: 9 work photos [PLACEHOLDER], 2 col mobile / 3 desktop, lightbox modal */}
+          {/* 7. Gallery: 6 curated styling photos with swipe */}
           <GallerySection />
 
-          {/* 8. Visit us: Lal Quarter Market, near Vodafone store, hours, map embed, tel, directions */}
+          {/* 8. Visit us: Lal Quarter Market, hours, directions, static map */}
           <VisitUsSection />
+
+          {/* Final CTA once at the bottom: "Ready for a fresh look?" + one Book button */}
+          <SectionBookingCta />
         </main>
 
         {/* 9. Footer: LocalBusiness JSON-LD, hours, links, info */}
