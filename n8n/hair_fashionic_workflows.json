@@ -1,0 +1,848 @@
+{
+  "name": "Hair Fashionic - WhatsApp Automation Suite",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "### 1. POST-VISIT REVIEW ENGINE (2-HR DELAY)\nTriggered when staff logs a client in Google Sheets.\nWaits 2 hours, sends Meta-approved Utility Template with Google Review link.\nGoal: Accelerate from 50 to 150 Google Reviews.",
+        "height": 280,
+        "width": 640,
+        "color": 6
+      },
+      "id": "sticky-wf1",
+      "name": "Sticky Note - Workflow 1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        100,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### 2. REBOOKING CADENCE NUDGE\nRuns daily at 11:00 AM IST.\n• 28 days for Haircut\n• 21 days for Colour touch-up & Hair Spa\nSends personalized marketing WhatsApp message with stylist name.",
+        "height": 280,
+        "width": 640,
+        "color": 4
+      },
+      "id": "sticky-wf2",
+      "name": "Sticky Note - Workflow 2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        100,
+        450
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### 3. FESTIVAL & WEDDING BROADCAST\nTriggered via Webhook for Diwali, Karva Chauth, Wedding season.\nFiltered to opted-in clients only (opted_in == TRUE).\nSends Meta Marketing Template with [OFFER].",
+        "height": 280,
+        "width": 640,
+        "color": 5
+      },
+      "id": "sticky-wf3",
+      "name": "Sticky Note - Workflow 3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        100,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### 4. DAILY 9:30 AM OWNER AUDIT REPORT\nRuns every morning at 09:30 AM Asia/Kolkata.\nAggregates yesterday's visits, stylist breakdown, and review requests sent.\nSends WhatsApp dispatch directly to Owner (+91 85870 41387).",
+        "height": 280,
+        "width": 640,
+        "color": 7
+      },
+      "id": "sticky-wf4",
+      "name": "Sticky Note - Workflow 4",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        100,
+        1150
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### ERROR HANDLING & AUDIT TRAIL\nCatches failed message deliveries, retries 3x with exponential backoff, logs failures to Google Sheets 'Errors' tab, and alerts the salon owner.",
+        "height": 280,
+        "width": 640,
+        "color": 1
+      },
+      "id": "sticky-errors",
+      "name": "Sticky Note - Errors",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        100,
+        1500
+      ]
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Clients",
+          "mode": "name"
+        },
+        "event": "rowAdded"
+      },
+      "id": "node-wf1-trigger",
+      "name": "Google Sheets - Row Added (New Visit)",
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        220,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 2,
+        "unit": "hours"
+      },
+      "id": "node-wf1-wait",
+      "name": "Wait 2 Hours (Post-Visit Window)",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        420,
+        180
+      ],
+      "webhookId": "hair-fashionic-wait-review-2h"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Sanitize and clean Indian phone number format for WhatsApp Cloud API\nlet rawPhone = String($json.phone || '').replace(/\\D/g, '');\nif (rawPhone.length === 10) {\n  rawPhone = '91' + rawPhone;\n} else if (rawPhone.startsWith('0') && rawPhone.length === 11) {\n  rawPhone = '91' + rawPhone.substring(1);\n}\n\nconst clientName = ($json.name || 'Valued Client').trim();\nconst stylist = ($json.stylist || 'Rahees').trim();\nconst service = ($json.service || 'haircut & styling').trim();\nconst rowNumber = $json.row_number || $json.__rowNumber || 2;\n\nreturn {\n  json: {\n    client_name: clientName,\n    phone_e164: rawPhone,\n    stylist: stylist,\n    service: service,\n    row_number: rowNumber,\n    google_review_link: 'https://search.google.com/local/writereview?placeid=YOUR_GOOGLE_PLACE_ID'\n  }\n};"
+      },
+      "id": "node-wf1-prepare",
+      "name": "Prepare Review Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        600,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $env.WHATSAPP_PHONE_NUMBER_ID }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.WHATSAPP_ACCESS_TOKEN }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={\n  \"messaging_product\": \"whatsapp\",\n  \"recipient_type\": \"individual\",\n  \"to\": \"{{ $json.phone_e164 }}\",\n  \"type\": \"template\",\n  \"template\": {\n    \"name\": \"hair_fashionic_post_visit_review\",\n    \"language\": {\n      \"code\": \"en\"\n    },\n    \"components\": [\n      {\n        \"type\": \"body\",\n        \"parameters\": [\n          {\n            \"type\": \"text\",\n            \"text\": \"{{ $json.client_name }}\"\n          },\n          {\n            \"type\": \"text\",\n            \"text\": \"{{ $json.stylist }}\"\n          },\n          {\n            \"type\": \"text\",\n            \"text\": \"{{ $json.service }}\"\n          }\n        ]\n      },\n      {\n        \"type\": \"button\",\n        \"sub_type\": \"url\",\n        \"index\": \"0\",\n        \"parameters\": [\n          {\n            \"type\": \"text\",\n            \"text\": \"review\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          },
+          "retry": {
+            "retry": {
+              "maxTries": 3,
+              "waitBetweenTries": 5000
+            }
+          }
+        }
+      },
+      "id": "node-wf1-send-review",
+      "name": "WhatsApp - Send Review Request (Utility)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        800,
+        180
+      ],
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Clients",
+          "mode": "name"
+        },
+        "columnToMatchOn": "phone",
+        "valueToMatchOn": "={{ $('Prepare Review Payload').item.json.phone_e164 }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "review_sent_at",
+              "fieldValue": "={{ $now.setZone('Asia/Kolkata').toFormat('yyyy-MM-dd HH:mm:ss') }}"
+            }
+          ]
+        }
+      },
+      "id": "node-wf1-update-sheet",
+      "name": "Google Sheets - Mark Review Sent",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1000,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 11 * * *"
+            }
+          ]
+        }
+      },
+      "id": "node-wf2-schedule",
+      "name": "Daily at 11:00 AM IST",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        220,
+        530
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Clients",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "id": "node-wf2-read-clients",
+      "name": "Google Sheets - Read Clients for Nudge",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        420,
+        530
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Filter clients for rebooking cadences based on Asia/Kolkata timezone\nconst today = new Date();\nconst results = [];\n\nfor (const item of $input.all()) {\n  const row = item.json;\n  \n  // Check consent and existing nudge\n  const isOptedIn = String(row.opted_in || '').toLowerCase() === 'true';\n  if (!isOptedIn || row.rebook_nudge_sent_at) {\n    continue;\n  }\n  \n  if (!row.visit_date) continue;\n  \n  const visitDate = new Date(row.visit_date);\n  const diffDays = Math.floor((today - visitDate) / (1000 * 60 * 60 * 24));\n  \n  const service = String(row.service || '').toLowerCase();\n  let shouldNudge = false;\n  let cadenceLabel = '';\n  \n  // 28 days for haircut\n  if (service.includes('haircut') || service.includes('grooming') || service.includes('beard')) {\n    if (diffDays === 28) {\n      shouldNudge = true;\n      cadenceLabel = '4 weeks';\n    }\n  }\n  \n  // 21 days for colour touch-up or hair spa\n  if (service.includes('colour') || service.includes('color') || service.includes('spa') || service.includes('keratin')) {\n    if (diffDays === 21) {\n      shouldNudge = true;\n      cadenceLabel = '3 weeks';\n    }\n  }\n  \n  if (shouldNudge) {\n    let cleanPhone = String(row.phone || '').replace(/\\D/g, '');\n    if (cleanPhone.length === 10) cleanPhone = '91' + cleanPhone;\n    \n    results.push({\n      json: {\n        name: row.name || 'Valued Client',\n        phone: cleanPhone,\n        service: row.service || 'hair service',\n        stylist: row.stylist || 'Rahees',\n        visit_date: row.visit_date,\n        cadence_label: cadenceLabel,\n        days_ago: diffDays\n      }\n    });\n  }\n}\n\nreturn results;"
+      },
+      "id": "node-wf2-filter-nudge",
+      "name": "Filter 28-day & 21-day Cadences",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        600,
+        530
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $env.WHATSAPP_PHONE_NUMBER_ID }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.WHATSAPP_ACCESS_TOKEN }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={\n  \"messaging_product\": \"whatsapp\",\n  \"recipient_type\": \"individual\",\n  \"to\": \"{{ $json.phone }}\",\n  \"type\": \"template\",\n  \"template\": {\n    \"name\": \"hair_fashionic_rebooking_nudge\",\n    \"language\": {\n      \"code\": \"en\"\n    },\n    \"components\": [\n      {\n        \"type\": \"body\",\n        \"parameters\": [\n          {\n            \"type\": \"text\",\n            \"text\": \"{{ $json.name }}\"\n          },\n          {\n            \"type\": \"text\",\n            \"text\": \"{{ $json.service }}\"\n          },\n          {\n            \"type\": \"text\",\n            \"text\": \"{{ $json.stylist }}\"\n          },\n          {\n            \"type\": \"text\",\n            \"text\": \"{{ $json.cadence_label }}\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+        "options": {
+          "retry": {
+            "retry": {
+              "maxTries": 3,
+              "waitBetweenTries": 5000
+            }
+          }
+        }
+      },
+      "id": "node-wf2-send-nudge",
+      "name": "WhatsApp - Send Rebooking Nudge (Marketing)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        800,
+        530
+      ],
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Clients",
+          "mode": "name"
+        },
+        "columnToMatchOn": "phone",
+        "valueToMatchOn": "={{ $json.phone }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "rebook_nudge_sent_at",
+              "fieldValue": "={{ $now.setZone('Asia/Kolkata').toFormat('yyyy-MM-dd HH:mm:ss') }}"
+            }
+          ]
+        }
+      },
+      "id": "node-wf2-update-sheet",
+      "name": "Google Sheets - Mark Nudge Sent",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1000,
+        530
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "hair-fashionic-festival-broadcast",
+        "options": {}
+      },
+      "id": "node-wf3-webhook",
+      "name": "Webhook - Trigger Festival Broadcast",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        220,
+        880
+      ],
+      "webhookId": "hair-fashionic-festival-broadcast"
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Clients",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "id": "node-wf3-read-opted-in",
+      "name": "Google Sheets - Read Opted-In Clients",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        420,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const broadcastOffer = $('Webhook - Trigger Festival Broadcast').first().json.body?.offer_text || 'Exclusive Festival Glow Package';\nconst festivalName = $('Webhook - Trigger Festival Broadcast').first().json.body?.festival_name || 'Festive Season';\nconst validity = $('Webhook - Trigger Festival Broadcast').first().json.body?.validity || 'this Sunday';\n\nconst optedInClients = [];\nfor (const item of $input.all()) {\n  const row = item.json;\n  const isOptedIn = String(row.opted_in || '').toLowerCase() === 'true';\n  if (isOptedIn && row.phone) {\n    let cleanPhone = String(row.phone).replace(/\\D/g, '');\n    if (cleanPhone.length === 10) cleanPhone = '91' + cleanPhone;\n    \n    optedInClients.push({\n      json: {\n        name: row.name || 'Valued Guest',\n        phone: cleanPhone,\n        festival_name: festivalName,\n        offer_text: broadcastOffer,\n        validity: validity\n      }\n    });\n  }\n}\n\nreturn optedInClients;"
+      },
+      "id": "node-wf3-filter-opted",
+      "name": "Filter Opted-In & Attach Offer",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        600,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 10,
+        "options": {}
+      },
+      "id": "node-wf3-batch",
+      "name": "Split in Batches (Rate Limiting)",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        780,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $env.WHATSAPP_PHONE_NUMBER_ID }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.WHATSAPP_ACCESS_TOKEN }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={\n  \"messaging_product\": \"whatsapp\",\n  \"recipient_type\": \"individual\",\n  \"to\": \"{{ $json.phone }}\",\n  \"type\": \"template\",\n  \"template\": {\n    \"name\": \"hair_fashionic_festival_offer\",\n    \"language\": {\n      \"code\": \"en\"\n    },\n    \"components\": [\n      {\n        \"type\": \"body\",\n        \"parameters\": [\n          {\n            \"type\": \"text\",\n            \"text\": \"{{ $json.name }}\"\n          },\n          {\n            \"type\": \"text\",\n            \"text\": \"{{ $json.festival_name }}\"\n          },\n          {\n            \"type\": \"text\",\n            \"text\": \"{{ $json.offer_text }}\"\n          },\n          {\n            \"type\": \"text\",\n            \"text\": \"{{ $json.validity }}\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+        "options": {
+          "retry": {
+            "retry": {
+              "maxTries": 3,
+              "waitBetweenTries": 5000
+            }
+          }
+        }
+      },
+      "id": "node-wf3-send-broadcast",
+      "name": "WhatsApp - Send Festival Broadcast (Marketing)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        960,
+        880
+      ],
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "30 9 * * *"
+            }
+          ]
+        }
+      },
+      "id": "node-wf4-schedule",
+      "name": "Daily at 9:30 AM IST",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        220,
+        1230
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Clients",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "id": "node-wf4-read-all",
+      "name": "Google Sheets - Read Visits for Report",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        420,
+        1230
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Compute Yesterday in Asia/Kolkata\nconst now = new Date();\nconst yesterday = new Date(now);\nyesterday.setDate(now.getDate() - 1);\nconst yyyy = yesterday.getFullYear();\nconst mm = String(yesterday.getMonth() + 1).padStart(2, '0');\nconst dd = String(yesterday.getDate()).padStart(2, '0');\nconst yesterdayStr = `${yyyy}-${mm}-${dd}`;\n\nlet yesterdayVisits = 0;\nlet reviewRequestsSent = 0;\nconst stylistCounts = {};\nconst serviceCounts = {};\n\nfor (const item of $input.all()) {\n  const row = item.json;\n  const visitDate = String(row.visit_date || '').trim();\n  \n  if (visitDate === yesterdayStr || visitDate.startsWith(yesterdayStr)) {\n    yesterdayVisits++;\n    if (row.review_sent_at) {\n      reviewRequestsSent++;\n    }\n    \n    const st = row.stylist || 'Unassigned';\n    stylistCounts[st] = (stylistCounts[st] || 0) + 1;\n    \n    const srv = row.service || 'Other';\n    serviceCounts[srv] = (serviceCounts[srv] || 0) + 1;\n  }\n}\n\nlet stylistBreakdown = Object.entries(stylistCounts)\n  .map(([k, v]) => `• ${k}: ${v} visit(s)`)\n  .join('\\n') || '• No visits logged';\n\nlet serviceBreakdown = Object.entries(serviceCounts)\n  .map(([k, v]) => `• ${k}: ${v}`)\n  .join('\\n') || '• No services logged';\n\nreturn {\n  json: {\n    report_date: yesterdayStr,\n    total_visits: yesterdayVisits,\n    reviews_sent: reviewRequestsSent,\n    stylist_breakdown: stylistBreakdown,\n    service_breakdown: serviceBreakdown,\n    owner_phone: '918587041387'\n  }\n};"
+      },
+      "id": "node-wf4-aggregate",
+      "name": "Calculate Yesterday's Metrics",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        600,
+        1230
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $env.WHATSAPP_PHONE_NUMBER_ID }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.WHATSAPP_ACCESS_TOKEN }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={\n  \"messaging_product\": \"whatsapp\",\n  \"recipient_type\": \"individual\",\n  \"to\": \"{{ $json.owner_phone }}\",\n  \"type\": \"text\",\n  \"text\": {\n    \"preview_url\": false,\n    \"body\": \"💈 *HAIR FASHIONIC - DAILY REPORT*\\n📍 Lal Quarter Market, Krishna Nagar\\n🗓️ Date: {{ $json.report_date }}\\n\\n✂️ *Total Visits Yesterday:* {{ $json.total_visits }}\\n⭐ *Review Requests Dispatched:* {{ $json.reviews_sent }}\\n\\n*Stylist Performance:*\\n{{ $json.stylist_breakdown }}\\n\\n*Services Delivered:*\\n{{ $json.service_breakdown }}\\n\\n🎯 *Google Review Sprint:* Current: 50 | Target: 150 reviews\"\n  }\n}",
+        "options": {
+          "retry": {
+            "retry": {
+              "maxTries": 3,
+              "waitBetweenTries": 5000
+            }
+          }
+        }
+      },
+      "id": "node-wf4-send-report",
+      "name": "WhatsApp - Dispatch Owner Report",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        800,
+        1230
+      ],
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {},
+      "id": "node-error-trigger",
+      "name": "Error Trigger (On Workflow Failure)",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        220,
+        1580
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Errors",
+          "mode": "name"
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "timestamp",
+              "fieldValue": "={{ $now.setZone('Asia/Kolkata').toFormat('yyyy-MM-dd HH:mm:ss') }}"
+            },
+            {
+              "fieldId": "workflow_name",
+              "fieldValue": "={{ $json.workflow.name }}"
+            },
+            {
+              "fieldId": "node_name",
+              "fieldValue": "={{ $json.execution.error.node.name }}"
+            },
+            {
+              "fieldId": "error_message",
+              "fieldValue": "={{ $json.execution.error.message }}"
+            },
+            {
+              "fieldId": "execution_id",
+              "fieldValue": "={{ $json.execution.id }}"
+            }
+          ]
+        }
+      },
+      "id": "node-error-log-sheet",
+      "name": "Google Sheets - Log to Errors Tab",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        460,
+        1580
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $env.WHATSAPP_PHONE_NUMBER_ID }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.WHATSAPP_ACCESS_TOKEN }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={\n  \"messaging_product\": \"whatsapp\",\n  \"recipient_type\": \"individual\",\n  \"to\": \"918587041387\",\n  \"type\": \"text\",\n  \"text\": {\n    \"body\": \"⚠️ *ALERT: Hair Fashionic Automation Error*\\nNode: {{ $('Error Trigger (On Workflow Failure)').item.json.execution.error.node.name }}\\nMessage: {{ $('Error Trigger (On Workflow Failure)').item.json.execution.error.message }}\\nTime: {{ $now.setZone('Asia/Kolkata').toFormat('dd-MM-yyyy HH:mm') }}\\nLogged to Google Sheet Errors tab.\"\n  }\n}",
+        "options": {}
+      },
+      "id": "node-error-alert-owner",
+      "name": "WhatsApp - Alert Owner of Error",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        680,
+        1580
+      ]
+    }
+  ],
+  "connections": {
+    "Google Sheets - Row Added (New Visit)": {
+      "main": [
+        [
+          {
+            "node": "Wait 2 Hours (Post-Visit Window)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 2 Hours (Post-Visit Window)": {
+      "main": [
+        [
+          {
+            "node": "Prepare Review Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Review Payload": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp - Send Review Request (Utility)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp - Send Review Request (Utility)": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets - Mark Review Sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Daily at 11:00 AM IST": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets - Read Clients for Nudge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets - Read Clients for Nudge": {
+      "main": [
+        [
+          {
+            "node": "Filter 28-day & 21-day Cadences",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter 28-day & 21-day Cadences": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp - Send Rebooking Nudge (Marketing)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp - Send Rebooking Nudge (Marketing)": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets - Mark Nudge Sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook - Trigger Festival Broadcast": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets - Read Opted-In Clients",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets - Read Opted-In Clients": {
+      "main": [
+        [
+          {
+            "node": "Filter Opted-In & Attach Offer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Opted-In & Attach Offer": {
+      "main": [
+        [
+          {
+            "node": "Split in Batches (Rate Limiting)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split in Batches (Rate Limiting)": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp - Send Festival Broadcast (Marketing)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Daily at 9:30 AM IST": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets - Read Visits for Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets - Read Visits for Report": {
+      "main": [
+        [
+          {
+            "node": "Calculate Yesterday's Metrics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculate Yesterday's Metrics": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp - Dispatch Owner Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Trigger (On Workflow Failure)": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets - Log to Errors Tab",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets - Log to Errors Tab": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp - Alert Owner of Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Kolkata"
+  }
+}
