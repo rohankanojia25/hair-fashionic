@@ -109,3 +109,86 @@
   box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.35);
   border: 1px solid rgba(201, 162, 39, 0.2);
 }
+
+/* Gold button shine sweep */
+.btn-gold-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-gold-shine::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -70%;
+  width: 45%;
+  height: 200%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transform: rotate(25deg);
+  pointer-events: none;
+  transition: none;
+}
+
+@media (hover: hover) {
+  .btn-gold-shine:hover::after {
+    left: 150%;
+    transition: left 0.75s ease-in-out;
+  }
+}
+
+/* Soft pulse every 6s on WhatsApp booking button */
+@keyframes soft-pulse {
+  0%, 80%, 100% {
+    box-shadow: 0 0 0 0 rgba(201, 162, 39, 0);
+  }
+  88% {
+    box-shadow: 0 0 0 7px rgba(201, 162, 39, 0.35);
+  }
+  95% {
+    box-shadow: 0 0 0 12px rgba(201, 162, 39, 0);
+  }
+}
+
+.btn-pulse-gold {
+  animation: soft-pulse 6s infinite ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-pulse-gold {
+    animation: none !important;
+  }
+  .btn-gold-shine::after {
+    display: none !important;
+  }
+  .animate-marquee-track {
+    animation: none !important;
+  }
+}
+
+/* Gold marquee strip animation */
+@keyframes marquee-scroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 25s linear infinite;
+  will-change: transform;
+}
+
+@media (hover: hover) {
+  .group:hover .animate-marquee-track {
+    animation-play-state: paused;
+  }
+}

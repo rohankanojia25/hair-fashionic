@@ -1,6 +1,10 @@
+import { useEffect } from 'react'
+import Lenis from 'lenis'
+import 'lenis/dist/lenis.css'
 import { Header } from './components/Header'
 import { Hero } from './components/Hero'
 import { TrustStrip } from './components/TrustStrip'
+import { MarqueeStrip } from './components/MarqueeStrip'
 import { ServicesSection } from './components/ServicesSection'
 import { StylistSection } from './components/StylistSection'
 import { ReviewsSection } from './components/ReviewsSection'
@@ -12,6 +16,43 @@ import { BookingProvider } from './context/BookingContext'
 import { BookingModal } from './components/BookingModal'
 
 export function App() {
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.1,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    })
+
+    function raf(time: number) {
+      lenis.raf(time)
+      requestAnimationFrame(raf)
+    }
+
+    const rafId = requestAnimationFrame(raf)
+
+    // Keep anchor links working smoothly with header offset
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement).closest('a')
+      if (!target) return
+      const href = target.getAttribute('href')
+      if (href && href.startsWith('#') && href.length > 1) {
+        const element = document.querySelector(href)
+        if (element) {
+          e.preventDefault()
+          lenis.scrollTo(element as HTMLElement, { offset: -70 })
+        }
+      }
+    }
+
+    document.addEventListener('click', handleAnchorClick)
+
+    return () => {
+      cancelAnimationFrame(rafId)
+      document.removeEventListener('click', handleAnchorClick)
+      lenis.destroy()
+    }
+  }, [])
+
   return (
     <BookingProvider>
       <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-[#1E1E1E]">
@@ -24,6 +65,9 @@ export function App() {
 
           {/* 3. Trust strip: 5.0 on Google, Humble staff, Hygienic tools, Near Vodafone store */}
           <TrustStrip />
+
+          {/* Gold marquee strip between hero and services */}
+          <MarqueeStrip />
 
           {/* 4. Services: tabs Hair/Colour/Treatments/Grooming/Skin, cards with prefilled WhatsApp booking */}
           <ServicesSection />

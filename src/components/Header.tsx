@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { motion, useReducedMotion } from 'motion/react'
 import { Menu, X, MessageCircle, MapPin, Phone } from 'lucide-react'
 import { SALON_INFO, getWhatsAppBookingLink } from '../data/salonData'
 import { useBooking } from '../context/BookingContext'
@@ -7,12 +8,13 @@ export const Header = () => {
   const { openBooking } = useBooking()
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const shouldReduceMotion = useReducedMotion()
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20)
+      setScrolled(window.scrollY > 40)
     }
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -29,18 +31,24 @@ export const Header = () => {
 
   return (
     <>
-      <header
-        className={`sticky top-0 z-40 w-full transition-all duration-300 ${
+      <motion.header
+        initial={{ y: shouldReduceMotion ? 0 : -40, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className={`fixed top-0 inset-x-0 z-40 w-full transition-all duration-300 ${
           scrolled
-            ? 'bg-[#0F0F10]/95 backdrop-blur-md shadow-lg border-b border-[#C9A227]/20 py-3'
-            : 'bg-[#0F0F10] border-b border-[#0F0F10]/10 py-4'
+            ? 'py-3 bg-black/70 backdrop-blur-md shadow-lg border-b border-[#C9A227]/20'
+            : 'py-5 bg-transparent border-b border-transparent'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             {/* Wordmark */}
-            <a href="#" className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A227]">
-              <div className="w-9 h-9 rounded-lg bg-[#FAF8F5] flex items-center justify-center font-serif text-[#0F0F10] font-bold text-lg border border-[#C9A227]/40 shadow-sm transition-transform group-hover:scale-105">
+            <a
+              href="#"
+              className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A227]"
+            >
+              <div className="w-9 h-9 rounded-lg bg-[#FAF8F5] flex items-center justify-center font-serif text-[#0F0F10] font-bold text-lg border border-[#C9A227]/40 shadow-sm transition-transform duration-200 group-hover:scale-105">
                 HF
               </div>
               <div className="flex flex-col">
@@ -67,34 +75,36 @@ export const Header = () => {
               ))}
             </nav>
 
-            {/* Desktop CTA */}
+            {/* Desktop CTA with gold shine and press scale 0.97 */}
             <div className="hidden md:flex items-center gap-3">
-              <a
+              <motion.a
+                whileTap={{ scale: 0.97 }}
                 href={getWhatsAppBookingLink('Salon Booking')}
                 onClick={(e) => {
                   e.preventDefault()
                   openBooking()
                 }}
-                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 min-h-[44px] rounded-xl bg-[#C9A227] text-[#0F0F10] hover:bg-[#b8911f] font-sans font-semibold text-[15px] tracking-[0.02em] transition-all duration-200 shadow-sm hover:shadow-md active:scale-95 cursor-pointer"
+                className="btn-gold-shine inline-flex items-center justify-center gap-2 px-5 py-2.5 min-h-[44px] rounded-xl bg-[#C9A227] text-[#0F0F10] hover:bg-[#b8911f] font-sans font-semibold text-[15px] tracking-[0.02em] transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer"
               >
                 <MessageCircle className="w-4 h-4 fill-current" />
                 <span>Book Now</span>
-              </a>
+              </motion.a>
             </div>
 
             {/* Mobile Hamburger Button */}
             <div className="flex md:hidden items-center gap-2">
-              <a
+              <motion.a
+                whileTap={{ scale: 0.97 }}
                 href={getWhatsAppBookingLink('Salon Booking')}
                 onClick={(e) => {
                   e.preventDefault()
                   openBooking()
                 }}
-                className="p-2 min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-lg bg-[#C9A227] text-[#0F0F10] font-sans font-semibold cursor-pointer"
+                className="btn-gold-shine p-2 min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-lg bg-[#C9A227] text-[#0F0F10] font-sans font-semibold cursor-pointer"
                 aria-label="Book on WhatsApp"
               >
                 <MessageCircle className="w-5 h-5 fill-current" />
-              </a>
+              </motion.a>
               <button
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}
@@ -107,7 +117,7 @@ export const Header = () => {
             </div>
           </div>
         </div>
-      </header>
+      </motion.header>
 
       {/* Mobile Drawer / Sheet Navigation */}
       {isOpen && (
@@ -119,7 +129,7 @@ export const Header = () => {
           />
 
           {/* Drawer Content */}
-          <div className="relative z-10 w-full max-w-sm ml-auto h-full bg-[#0F0F10] text-[#FAF8F5] p-6 flex flex-col justify-between shadow-2xl border-l border-[#C9A227]/20">
+          <div className="relative z-10 w-full max-w-sm ml-auto h-full bg-[#0F0F10] text-[#FAF8F5] p-6 flex flex-col justify-between shadow-2xl border-l border-[#C9A227]/20 animate-in slide-in-from-right duration-200">
             <div>
               <div className="flex items-center justify-between pb-6 border-b border-[#FAF8F5]/10">
                 <div className="flex items-center gap-2">
@@ -165,18 +175,19 @@ export const Header = () => {
             </div>
 
             <div className="pt-6 border-t border-[#FAF8F5]/10 space-y-3">
-              <a
+              <motion.a
+                whileTap={{ scale: 0.97 }}
                 href={getWhatsAppBookingLink('Salon Booking')}
                 onClick={(e) => {
                   e.preventDefault()
                   handleNavClick()
                   openBooking()
                 }}
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 min-h-[44px] rounded-xl bg-[#C9A227] text-[#0F0F10] font-sans font-semibold text-[15px] tracking-[0.02em] transition-colors cursor-pointer"
+                className="btn-gold-shine w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 min-h-[44px] rounded-xl bg-[#C9A227] text-[#0F0F10] font-sans font-semibold text-[15px] tracking-[0.02em] transition-colors cursor-pointer"
               >
                 <MessageCircle className="w-5 h-5 fill-current" />
                 <span>Book on WhatsApp</span>
-              </a>
+              </motion.a>
               <a
                 href={`tel:${SALON_INFO.rawPhone}`}
                 className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[44px] rounded-xl border border-white/20 text-[#FAF8F5] hover:bg-white/5 font-sans font-semibold text-[15px] tracking-[0.02em] transition-colors"

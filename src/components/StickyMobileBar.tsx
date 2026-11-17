@@ -1,11 +1,42 @@
+import { useState, useEffect } from 'react'
+import { motion } from 'motion/react'
 import { Phone, MessageCircle, Navigation } from 'lucide-react'
 import { SALON_INFO, getWhatsAppBookingLink } from '../data/salonData'
 import { useBooking } from '../context/BookingContext'
 
 export const StickyMobileBar = () => {
   const { openBooking } = useBooking()
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const hero = document.getElementById('hero')
+      if (hero) {
+        const heroBottom = hero.getBoundingClientRect().bottom
+        // Hero has scrolled past when its bottom reaches or passes header area
+        setIsVisible(heroBottom <= 80)
+      } else {
+        setIsVisible(window.scrollY > 450)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
+
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
-    <div className="fixed bottom-0 inset-x-0 z-50 md:hidden bg-[#0F0F10]/95 backdrop-blur-lg border-t border-[#C9A227]/30 px-3 py-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))] shadow-2xl">
+    <motion.div
+      initial={{ y: '100%', opacity: 0 }}
+      animate={{
+        y: isVisible ? '0%' : '100%',
+        opacity: isVisible ? 1 : 0,
+      }}
+      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+      className="fixed bottom-0 inset-x-0 z-50 md:hidden bg-[#0F0F10]/95 backdrop-blur-lg border-t border-[#C9A227]/30 px-3 py-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))] shadow-2xl"
+      style={{ pointerEvents: isVisible ? 'auto' : 'none' }}
+    >
       <div className="grid grid-cols-3 gap-2 max-w-md mx-auto">
         {/* Direct Call Button */}
         <a
@@ -24,7 +55,7 @@ export const StickyMobileBar = () => {
             e.preventDefault()
             openBooking()
           }}
-          className="flex flex-col items-center justify-center min-h-[48px] py-1 px-2 rounded-xl bg-[#C9A227] active:bg-[#b8911f] text-[#0F0F10] shadow-md transition-colors cursor-pointer"
+          className="flex flex-col items-center justify-center min-h-[48px] py-1 px-2 rounded-xl bg-[#C9A227] active:bg-[#b8911f] text-[#0F0F10] shadow-md transition-colors cursor-pointer btn-gold-shine"
           aria-label="Book Hair Fashionic on WhatsApp"
         >
           <MessageCircle className="w-5 h-5 fill-current mb-0.5" />
@@ -43,6 +74,6 @@ export const StickyMobileBar = () => {
           <span className="font-sans text-[11px] font-semibold tracking-tight">Directions</span>
         </a>
       </div>
-    </div>
+    </motion.div>
   )
 }
