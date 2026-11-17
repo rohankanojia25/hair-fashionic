@@ -293,16 +293,16 @@ Please confirm if this slot is available.`
             )}
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-serif text-lg font-bold text-[#0F0F10]">
+                <span className="font-serif text-2xl font-semibold text-[#0F0F10]">
                   {step === 5 ? 'Request Received' : 'Book Appointment'}
                 </span>
                 {step < 5 && (
-                  <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-[#0F0F10] text-[#C9A227]">
+                  <span className="text-[11px] font-sans font-bold px-2 py-0.5 rounded-full bg-[#0F0F10] text-[#C9A227]">
                     Step {step} of 4
                   </span>
                 )}
               </div>
-              <p className="text-xs text-[#666666]">
+              <p className="text-xs font-sans text-[#666666]">
                 {step === 1 && 'Select one or more services'}
                 {step === 2 && 'Select your preferred stylist'}
                 {step === 3 && 'Pick a date and 30-min slot'}
@@ -671,7 +671,7 @@ Please confirm if this slot is available.`
                 <button
                   type="button"
                   onClick={closeBooking}
-                  className="w-full py-3.5 px-6 rounded-xl bg-[#0F0F10] text-white hover:bg-[#252528] font-bold text-sm min-h-[44px] transition-colors"
+                  className="w-full py-3.5 px-6 rounded-xl bg-[#0F0F10] text-white hover:bg-[#252528] font-sans font-semibold text-[15px] tracking-[0.02em] min-h-[44px] transition-colors"
                 >
                   Done
                 </button>
@@ -688,7 +688,7 @@ Please confirm if this slot is available.`
                 type="button"
                 onClick={() => setStep(2)}
                 disabled={selectedServiceIds.length === 0}
-                className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 min-h-[48px] rounded-xl bg-[#0F0F10] text-[#C9A227] hover:bg-[#252528] font-bold text-base transition-colors shadow-sm disabled:opacity-50 cursor-pointer"
+                className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 min-h-[48px] rounded-xl bg-[#0F0F10] text-[#C9A227] hover:bg-[#252528] font-sans font-semibold text-[15px] tracking-[0.02em] transition-colors shadow-sm disabled:opacity-50 cursor-pointer"
               >
                 <span>Continue to Stylist</span>
                 <ArrowRight className="w-5 h-5" />
@@ -699,7 +699,7 @@ Please confirm if this slot is available.`
               <button
                 type="button"
                 onClick={() => setStep(3)}
-                className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 min-h-[48px] rounded-xl bg-[#0F0F10] text-[#C9A227] hover:bg-[#252528] font-bold text-base transition-colors shadow-sm cursor-pointer"
+                className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 min-h-[48px] rounded-xl bg-[#0F0F10] text-[#C9A227] hover:bg-[#252528] font-sans font-semibold text-[15px] tracking-[0.02em] transition-colors shadow-sm cursor-pointer"
               >
                 <span>Continue to Date & Time</span>
                 <ArrowRight className="w-5 h-5" />
@@ -710,7 +710,7 @@ Please confirm if this slot is available.`
               <button
                 type="button"
                 onClick={() => setStep(4)}
-                className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 min-h-[48px] rounded-xl bg-[#0F0F10] text-[#C9A227] hover:bg-[#252528] font-bold text-base transition-colors shadow-sm cursor-pointer"
+                className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 min-h-[48px] rounded-xl bg-[#0F0F10] text-[#C9A227] hover:bg-[#252528] font-sans font-semibold text-[15px] tracking-[0.02em] transition-colors shadow-sm cursor-pointer"
               >
                 <span>Continue to Details</span>
                 <ArrowRight className="w-5 h-5" />
@@ -721,7 +721,7 @@ Please confirm if this slot is available.`
               <button
                 type="button"
                 onClick={handleSubmit}
-                className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 min-h-[48px] rounded-xl bg-[#C9A227] text-[#0F0F10] hover:bg-[#b8911f] font-bold text-base transition-transform active:scale-[0.98] shadow-md cursor-pointer"
+                className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 min-h-[48px] rounded-xl bg-[#C9A227] text-[#0F0F10] hover:bg-[#b8911f] font-sans font-semibold text-[15px] tracking-[0.02em] transition-transform active:scale-[0.98] shadow-md cursor-pointer"
               >
                 <MessageCircle className="w-5 h-5 fill-current" />
                 <span>Confirm on WhatsApp (+91 85870 41387)</span>

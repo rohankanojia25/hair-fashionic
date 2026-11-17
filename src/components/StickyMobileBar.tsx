@@ -14,7 +14,7 @@ export const StickyMobileBar = () => {
           aria-label="Call Hair Fashionic Salon"
         >
           <Phone className="w-5 h-5 text-[#FAF8F5] mb-0.5" />
-          <span className="text-[11px] font-semibold tracking-tight">Call</span>
+          <span className="font-sans text-[11px] font-semibold tracking-tight">Call</span>
         </a>
 
         {/* WhatsApp Book Button (Primary Highlight) */}
@@ -28,7 +28,7 @@ export const StickyMobileBar = () => {
           aria-label="Book Hair Fashionic on WhatsApp"
         >
           <MessageCircle className="w-5 h-5 fill-current mb-0.5" />
-          <span className="text-[11px] font-bold tracking-tight">WhatsApp</span>
+          <span className="font-sans text-[11px] font-bold tracking-tight">WhatsApp</span>
         </a>
 
         {/* Directions Button */}
@@ -40,7 +40,7 @@ export const StickyMobileBar = () => {
           aria-label="Get directions to Hair Fashionic"
         >
           <Navigation className="w-5 h-5 text-[#FAF8F5] mb-0.5" />
-          <span className="text-[11px] font-semibold tracking-tight">Directions</span>
+          <span className="font-sans text-[11px] font-semibold tracking-tight">Directions</span>
         </a>
       </div>
     </div>

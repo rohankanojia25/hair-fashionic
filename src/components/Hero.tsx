@@ -5,6 +5,7 @@ import { useBooking } from '../context/BookingContext'
 
 export const Hero = () => {
   const { openBooking } = useBooking()
+
   return (
     <section className="relative min-h-[100dvh] flex flex-col justify-between pt-6 pb-12 sm:pt-10 sm:pb-16 bg-[#0F0F10] text-[#FAF8F5] overflow-hidden">
       {/* Subtle luxury ambient glow */}
@@ -15,25 +16,28 @@ export const Hero = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Text Column */}
           <div className="lg:col-span-7 flex flex-col items-start space-y-6">
-            {/* Top Pill / Social Proof */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-[#C9A227]/30 text-xs sm:text-sm font-medium backdrop-blur-md">
-              <div className="flex items-center text-[#C9A227]">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-3.5 h-3.5 fill-[#C9A227] text-[#C9A227]" />
-                ))}
+            {/* Top Eyebrow & Social Proof Pill */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+              <span className="eyebrow-label">KRISHNA NAGAR, DELHI</span>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-[#C9A227]/30 text-xs font-sans font-medium backdrop-blur-md">
+                <div className="flex items-center text-[#C9A227]">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-3.5 h-3.5 fill-[#C9A227] text-[#C9A227]" />
+                  ))}
+                </div>
+                <span className="text-[#C9A227] font-semibold">5.0 Star Rated</span>
+                <span className="text-white/40">•</span>
+                <span className="text-[#CFCAC2]">50 Google Reviews</span>
               </div>
-              <span className="text-[#C9A227] font-semibold">5.0 Star Rated</span>
-              <span className="text-white/40">•</span>
-              <span className="text-[#FAF8F5]/90">50 Google Reviews</span>
             </div>
 
-            {/* Headline with clamp() */}
-            <h1 className="hero-headline font-serif font-bold text-white tracking-tight">
-              Rated <span className="text-[#C9A227]">5.0</span> by 50 clients in Krishna Nagar
+            {/* Headline with clamp() and italic 5.0 */}
+            <h1 className="hero-headline font-serif font-semibold text-white tracking-tight">
+              Rated <span className="italic text-[#C9A227]">5.0</span> by 50 clients in Krishna Nagar
             </h1>
 
             {/* Subline */}
-            <p className="text-lg sm:text-xl text-[#FAF8F5]/85 max-w-2xl leading-relaxed font-sans">
+            <p className="text-[16px] md:text-[17px] leading-[1.65] text-[#CFCAC2] max-w-2xl font-sans">
               Haircuts, colour, hair spa and grooming by trained stylists in Lal Quarter Market.
             </p>
 
@@ -45,7 +49,7 @@ export const Hero = () => {
                   e.preventDefault()
                   openBooking({ serviceName: 'Haircut (Style & Finish)' })
                 }}
-                className="inline-flex items-center justify-center gap-2.5 px-8 py-4 min-h-[48px] rounded-xl bg-[#C9A227] text-[#0F0F10] hover:bg-[#b8911f] font-bold text-base transition-all duration-200 shadow-lg shadow-[#C9A227]/10 active:scale-[0.98] text-center cursor-pointer"
+                className="inline-flex items-center justify-center gap-2.5 px-8 py-4 min-h-[48px] rounded-xl bg-[#C9A227] text-[#0F0F10] hover:bg-[#b8911f] font-sans font-semibold text-[15px] tracking-[0.02em] transition-all duration-200 shadow-lg shadow-[#C9A227]/10 active:scale-[0.98] text-center cursor-pointer"
               >
                 <MessageCircle className="w-5 h-5 fill-current" />
                 <span>Book on WhatsApp</span>
@@ -53,7 +57,7 @@ export const Hero = () => {
 
               <a
                 href="#services"
-                className="inline-flex items-center justify-center gap-2 px-7 py-4 min-h-[48px] rounded-xl border border-white/20 bg-white/5 hover:bg-white/10 text-[#FAF8F5] font-semibold text-base transition-colors text-center"
+                className="inline-flex items-center justify-center gap-2 px-7 py-4 min-h-[48px] rounded-xl border border-white/20 bg-white/5 hover:bg-white/10 text-[#FAF8F5] font-sans font-semibold text-[15px] tracking-[0.02em] transition-colors text-center"
               >
                 <Scissors className="w-4 h-4 text-[#C9A227]" />
                 <span>See Services</span>
@@ -62,7 +66,7 @@ export const Hero = () => {
             </div>
 
             {/* Quick trust reassurance bullets */}
-            <div className="pt-2 flex flex-wrap items-center gap-y-2 gap-x-6 text-xs sm:text-sm text-[#FAF8F5]/70">
+            <div className="pt-2 flex flex-wrap items-center gap-y-2 gap-x-6 text-xs sm:text-sm text-[#CFCAC2]/80 font-sans">
               <span className="inline-flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4 text-[#C9A227]" />
                 Sanitized & single-use capes
@@ -93,7 +97,7 @@ export const Hero = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F10] via-transparent to-transparent opacity-80"></div>
 
                   {/* Placeholder Banner Badge */}
-                  <div className="absolute top-4 right-4 bg-[#0F0F10]/85 backdrop-blur-md border border-[#C9A227]/40 text-[#C9A227] px-3 py-1.5 rounded-lg text-xs font-semibold tracking-wide shadow-md">
+                  <div className="absolute top-4 right-4 bg-[#0F0F10]/85 backdrop-blur-md border border-[#C9A227]/40 text-[#C9A227] px-3 py-1.5 rounded-lg text-xs font-sans font-semibold tracking-wide shadow-md">
                     [SALON PHOTO]
                   </div>
 
@@ -101,17 +105,19 @@ export const Hero = () => {
                   <div className="absolute bottom-4 left-4 right-4 p-4 rounded-xl bg-[#0F0F10]/90 backdrop-blur-md border border-white/10 text-white">
                     <div className="flex items-center justify-between">
                       <div>
-                        <div className="text-xs uppercase tracking-wider text-[#C9A227] font-semibold">
+                        <div className="eyebrow-label text-[11px]">
                           Lal Quarter Market
                         </div>
-                        <p className="font-serif text-lg font-bold">Hair Fashionic Experience</p>
+                        <h3 className="card-title text-white mt-0.5">
+                          Hair Fashionic Experience
+                        </h3>
                       </div>
                       <div className="text-right">
                         <div className="flex items-center gap-1 justify-end text-[#C9A227]">
                           <Star className="w-4 h-4 fill-[#C9A227]" />
-                          <span className="font-bold text-sm text-white">5.0</span>
+                          <span className="font-sans font-bold text-sm text-white">5.0</span>
                         </div>
-                        <span className="text-[11px] text-white/60">50+ happy locals</span>
+                        <span className="text-[11px] font-sans text-[#CFCAC2]">50+ happy locals</span>
                       </div>
                     </div>
                   </div>

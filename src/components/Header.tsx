@@ -44,10 +44,10 @@ export const Header = () => {
                 HF
               </div>
               <div className="flex flex-col">
-                <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-[#FAF8F5]">
+                <span className="font-serif text-2xl sm:text-3xl font-semibold tracking-tight text-[#FAF8F5]">
                   Hair Fashionic
                 </span>
-                <span className="text-[10px] uppercase tracking-wider text-[#C9A227] font-semibold -mt-1">
+                <span className="eyebrow-label text-[10px] text-[#C9A227] -mt-0.5">
                   Lal Quarter • Krishna Nagar
                 </span>
               </div>
@@ -59,7 +59,7 @@ export const Header = () => {
                 <a
                   key={link.label}
                   href={link.href}
-                  className="text-sm font-medium text-[#FAF8F5]/85 hover:text-[#C9A227] transition-colors py-2 relative group"
+                  className="font-sans text-[15px] font-medium text-[#FAF8F5]/85 hover:text-[#C9A227] transition-colors py-2 relative group"
                 >
                   {link.label}
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#C9A227] transition-all duration-200 group-hover:w-full"></span>
@@ -75,7 +75,7 @@ export const Header = () => {
                   e.preventDefault()
                   openBooking()
                 }}
-                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 min-h-[44px] rounded-xl bg-[#C9A227] text-[#0F0F10] hover:bg-[#b8911f] font-semibold text-sm transition-all duration-200 shadow-sm hover:shadow-md active:scale-95 cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 min-h-[44px] rounded-xl bg-[#C9A227] text-[#0F0F10] hover:bg-[#b8911f] font-sans font-semibold text-[15px] tracking-[0.02em] transition-all duration-200 shadow-sm hover:shadow-md active:scale-95 cursor-pointer"
               >
                 <MessageCircle className="w-4 h-4 fill-current" />
                 <span>Book Now</span>
@@ -90,7 +90,7 @@ export const Header = () => {
                   e.preventDefault()
                   openBooking()
                 }}
-                className="p-2 min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-lg bg-[#C9A227] text-[#0F0F10] font-semibold cursor-pointer"
+                className="p-2 min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-lg bg-[#C9A227] text-[#0F0F10] font-sans font-semibold cursor-pointer"
                 aria-label="Book on WhatsApp"
               >
                 <MessageCircle className="w-5 h-5 fill-current" />
@@ -111,7 +111,7 @@ export const Header = () => {
 
       {/* Mobile Drawer / Sheet Navigation */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 md:hidden flex flex-col">
+        <div className="fixed inset-0 z-50 md:hidden flex flex-col font-sans">
           {/* Overlay */}
           <div
             className="fixed inset-0 bg-[#0F0F10]/80 backdrop-blur-sm transition-opacity"
@@ -126,7 +126,7 @@ export const Header = () => {
                   <div className="w-8 h-8 rounded-lg bg-[#FAF8F5] flex items-center justify-center font-serif text-[#0F0F10] font-bold">
                     HF
                   </div>
-                  <span className="font-serif text-lg text-white">Hair Fashionic</span>
+                  <span className="font-serif text-xl font-semibold text-white">Hair Fashionic</span>
                 </div>
                 <button
                   type="button"
@@ -144,7 +144,7 @@ export const Header = () => {
                     key={link.label}
                     href={link.href}
                     onClick={handleNavClick}
-                    className="flex items-center justify-between text-lg font-medium text-[#FAF8F5]/90 hover:text-[#C9A227] py-3 px-2 rounded-lg hover:bg-white/5 transition-colors"
+                    className="flex items-center justify-between text-base font-semibold text-[#FAF8F5]/90 hover:text-[#C9A227] py-3 px-2 rounded-lg hover:bg-white/5 transition-colors"
                   >
                     <span>{link.label}</span>
                     <span className="text-xs text-[#C9A227]">→</span>
@@ -152,7 +152,7 @@ export const Header = () => {
                 ))}
               </nav>
 
-              <div className="mt-8 p-4 rounded-xl bg-white/5 border border-white/10 text-xs text-[#FAF8F5]/70 space-y-2">
+              <div className="mt-8 p-4 rounded-xl bg-white/5 border border-white/10 text-xs text-[#CFCAC2] space-y-2">
                 <div className="flex items-start gap-2">
                   <MapPin className="w-4 h-4 text-[#C9A227] shrink-0 mt-0.5" />
                   <span>Lal Quarter Market, Krishna Nagar, Delhi 110051 (Near Vodafone Store)</span>
@@ -172,14 +172,14 @@ export const Header = () => {
                   handleNavClick()
                   openBooking()
                 }}
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 min-h-[44px] rounded-xl bg-[#C9A227] text-[#0F0F10] font-semibold text-base transition-colors cursor-pointer"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 min-h-[44px] rounded-xl bg-[#C9A227] text-[#0F0F10] font-sans font-semibold text-[15px] tracking-[0.02em] transition-colors cursor-pointer"
               >
                 <MessageCircle className="w-5 h-5 fill-current" />
                 <span>Book on WhatsApp</span>
               </a>
               <a
                 href={`tel:${SALON_INFO.rawPhone}`}
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[44px] rounded-xl border border-white/20 text-[#FAF8F5] hover:bg-white/5 text-sm font-medium transition-colors"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[44px] rounded-xl border border-white/20 text-[#FAF8F5] hover:bg-white/5 font-sans font-semibold text-[15px] tracking-[0.02em] transition-colors"
               >
                 <Phone className="w-4 h-4" />
                 <span>Direct Call</span>

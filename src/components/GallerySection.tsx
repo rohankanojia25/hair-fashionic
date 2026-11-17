@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Camera, X, MessageCircle, ZoomIn } from 'lucide-react'
+import { X, MessageCircle, ZoomIn } from 'lucide-react'
 import { GALLERY_ITEMS, type GalleryItem, getWhatsAppBookingLink } from '../data/salonData'
 import { SectionBookingCta } from './SectionBookingCta'
 import { useBooking } from '../context/BookingContext'
@@ -13,17 +13,14 @@ export const GallerySection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FAF8F5] border border-[#0F0F10]/10 text-[#0F0F10] text-xs font-semibold uppercase tracking-wider mb-3">
-            <Camera className="w-3.5 h-3.5 text-[#C9A227]" />
-            <span>Salon Portfolio</span>
-          </div>
-          <h2 className="section-headline font-serif font-bold text-[#0F0F10]">
-            Our Work in the Chair
+          <span className="eyebrow-label block mb-3">OUR PORTFOLIO</span>
+          <h2 className="section-headline font-serif text-[#0F0F10]">
+            Our <span className="italic text-[#C9A227]">Work</span> in the Chair
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-[#666666]">
+          <p className="mt-3 text-[16px] md:text-[17px] leading-[1.65] text-[#666666] font-sans">
             Cuts, colors, and treatments created by our stylists in Krishna Nagar. Tap any photo to expand.
           </p>
-          <div className="mt-2 text-xs text-amber-800 bg-amber-50 inline-block px-3 py-1 rounded-full border border-amber-200">
+          <div className="mt-2 text-xs font-sans text-amber-800 bg-amber-50 inline-block px-3 py-1 rounded-full border border-amber-200">
             [PLACEHOLDER WORK PHOTOS - Client styles & cuts]
           </div>
         </div>
@@ -53,13 +50,13 @@ export const GallerySection = () => {
 
               {/* Caption */}
               <div className="absolute bottom-0 inset-x-0 p-3 sm:p-4 text-white">
-                <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-[#C9A227]">
+                <span className="eyebrow-label text-[10px] sm:text-[11px] block text-[#C9A227]">
                   {item.category}
                 </span>
-                <p className="font-serif text-xs sm:text-base font-bold line-clamp-1">
+                <p className="card-title text-xs sm:text-base text-white line-clamp-1 mt-0.5">
                   {item.title}
                 </p>
-                <div className="hidden sm:flex items-center gap-1 text-[11px] text-white/70 mt-1">
+                <div className="hidden sm:flex items-center gap-1 text-[11px] font-sans text-white/70 mt-1">
                   <ZoomIn className="w-3.5 h-3.5" />
                   <span>Click to view & book this style</span>
                 </div>
@@ -94,20 +91,20 @@ export const GallerySection = () => {
                   alt={activePhoto.title}
                   className="w-full h-full object-contain"
                 />
-                <div className="absolute top-4 left-4 bg-black/70 text-[#C9A227] px-3 py-1 rounded text-xs font-semibold">
+                <div className="absolute top-4 left-4 bg-black/70 text-[#C9A227] px-3 py-1 rounded text-xs font-mono font-semibold">
                   [WORK PHOTO PLACEHOLDER]
                 </div>
               </div>
 
               <div className="p-5 sm:p-6 bg-[#0F0F10] text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#C9A227]">
+                  <span className="eyebrow-label text-xs block text-[#C9A227]">
                     {activePhoto.category}
                   </span>
-                  <h3 className="font-serif text-lg sm:text-xl font-bold mt-0.5">
+                  <h3 className="card-title text-lg sm:text-xl text-white mt-1">
                     {activePhoto.title}
                   </h3>
-                  <p className="text-xs text-white/60 mt-1">
+                  <p className="text-xs font-sans text-[#CFCAC2] mt-1">
                     Want this exact look? Send this style to our stylist on WhatsApp.
                   </p>
                 </div>
@@ -120,7 +117,7 @@ export const GallerySection = () => {
                     setActivePhoto(null)
                     openBooking({ serviceName: title })
                   }}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[44px] rounded-xl bg-[#C9A227] text-[#0F0F10] hover:bg-[#b8911f] font-bold text-sm shrink-0 transition-colors cursor-pointer"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[44px] rounded-xl bg-[#C9A227] text-[#0F0F10] hover:bg-[#b8911f] font-sans font-semibold text-[15px] tracking-[0.02em] shrink-0 transition-colors cursor-pointer"
                 >
                   <MessageCircle className="w-4 h-4 fill-current" />
                   <span>Book This Style</span>

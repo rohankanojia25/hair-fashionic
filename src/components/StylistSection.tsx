@@ -1,4 +1,4 @@
-import { Award, Star, MessageCircle, CheckCircle2 } from 'lucide-react'
+import { Star, MessageCircle, CheckCircle2 } from 'lucide-react'
 import { getWhatsAppBookingLink } from '../data/salonData'
 import { SectionBookingCta } from './SectionBookingCta'
 import { useBooking } from '../context/BookingContext'
@@ -19,14 +19,11 @@ export const StylistSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading */}
         <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FAF8F5] border border-[#0F0F10]/10 text-[#0F0F10] text-xs font-semibold uppercase tracking-wider mb-3">
-            <Award className="w-3.5 h-3.5 text-[#C9A227]" />
-            <span>Master Hair Artist</span>
-          </div>
-          <h2 className="section-headline font-serif font-bold text-[#0F0F10]">
-            Meet Our Stylist
+          <span className="eyebrow-label block mb-3">MEET THE STYLIST</span>
+          <h2 className="section-headline font-serif text-[#0F0F10]">
+            Meet Our <span className="italic text-[#C9A227]">Stylist</span>
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-[#666666]">
+          <p className="mt-3 text-[16px] md:text-[17px] leading-[1.65] text-[#666666] font-sans">
             The stylist our clients mention by name in their 5-star Google reviews.
           </p>
         </div>
@@ -45,19 +42,19 @@ export const StylistSection = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F10] via-[#0F0F10]/40 to-transparent"></div>
 
               {/* Photo Placeholder Tag */}
-              <div className="absolute top-4 left-4 bg-[#0F0F10]/90 backdrop-blur-sm border border-[#C9A227]/40 text-[#C9A227] px-3 py-1 rounded text-xs font-semibold">
+              <div className="absolute top-4 left-4 bg-[#0F0F10]/90 backdrop-blur-sm border border-[#C9A227]/40 text-[#C9A227] px-3 py-1 rounded text-xs font-sans font-semibold">
                 [PHOTO: PLACEHOLDER]
               </div>
 
               {/* Stylist Name overlay on mobile */}
               <div className="relative p-6 z-10">
-                <span className="text-[#C9A227] text-xs font-semibold tracking-wider uppercase">
+                <span className="eyebrow-label text-[11px] block text-[#C9A227]">
                   Senior Hairdresser
                 </span>
-                <h3 className="font-serif text-3xl font-bold text-white mt-1">
+                <h3 className="card-title text-2xl text-white mt-1">
                   Rahees
                 </h3>
-                <p className="text-xs text-[#FAF8F5]/80 mt-1">
+                <p className="text-xs text-[#CFCAC2] mt-1 font-sans">
                   Known for detail, gentle hands, and personalized style consultations.
                 </p>
               </div>
@@ -66,40 +63,40 @@ export const StylistSection = () => {
             {/* Stylist Details */}
             <div className="md:col-span-7 p-6 sm:p-8 lg:p-10 flex flex-col justify-between">
               <div>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0F0F10] text-[#C9A227] text-xs font-semibold mb-4">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0F0F10] text-[#C9A227] text-xs font-sans font-semibold mb-4">
                   <Star className="w-3.5 h-3.5 fill-[#C9A227]" />
                   <span>Google Client Favorite</span>
                 </div>
 
-                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#0F0F10]">
+                <h3 className="card-title text-2xl sm:text-3xl text-[#0F0F10]">
                   Rahees
                 </h3>
-                <p className="text-sm font-medium text-[#C9A227] mt-1">
+                <p className="text-sm font-sans font-semibold text-[#C9A227] mt-1">
                   Master Hair Stylist & Grooming Specialist
                 </p>
 
-                <p className="mt-4 text-sm sm:text-base text-[#666666] leading-relaxed">
+                <p className="mt-4 text-[16px] md:text-[17px] leading-[1.65] text-[#666666] font-sans">
                   With years of dedicated craft in East Delhi, Rahees takes time to understand your hair texture, face shape, and lifestyle before making the first cut. Clients consistently praise his humility, patience, and artistry.
                 </p>
 
                 {/* Real client mention callout */}
                 <div className="mt-5 p-4 rounded-xl bg-white border border-[#C9A227]/30 shadow-sm">
-                  <p className="text-xs sm:text-sm italic text-[#1E1E1E]">
+                  <p className="text-sm italic font-serif text-[#1E1E1E]">
                     &ldquo;All time best salon, kudos to Rahees, great hair artist&rdquo;
                   </p>
-                  <p className="text-[11px] font-semibold text-[#666666] mt-1">
+                  <p className="text-[11px] font-sans font-semibold text-[#666666] mt-1">
                     — Verified Google Reviewer
                   </p>
                 </div>
 
                 {/* Specialities List */}
                 <div className="mt-6">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-[#0F0F10] mb-3">
+                  <h4 className="eyebrow-label text-[11px] mb-3">
                     Specialities & Signature Services
                   </h4>
                   <ul className="space-y-2">
                     {specialities.map((item, idx) => (
-                      <li key={idx} className="flex items-center gap-2 text-sm text-[#1E1E1E]">
+                      <li key={idx} className="flex items-center gap-2 text-sm font-sans text-[#1E1E1E]">
                         <CheckCircle2 className="w-4 h-4 text-[#C9A227] shrink-0" />
                         <span>{item}</span>
                       </li>
@@ -116,7 +113,7 @@ export const StylistSection = () => {
                     e.preventDefault()
                     openBooking({ stylistName: 'Rahees', serviceName: 'Haircut (Style & Finish)' })
                   }}
-                  className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 min-h-[44px] rounded-xl bg-[#0F0F10] hover:bg-[#252528] text-white font-bold text-sm transition-all shadow-sm active:scale-[0.99] cursor-pointer"
+                  className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 min-h-[44px] rounded-xl bg-[#0F0F10] hover:bg-[#252528] text-white font-sans font-semibold text-[15px] tracking-[0.02em] transition-all shadow-sm active:scale-[0.99] cursor-pointer"
                 >
                   <MessageCircle className="w-4 h-4 text-[#C9A227]" />
                   <span>Book with Rahees on WhatsApp</span>

@@ -8,14 +8,11 @@ export const ReviewsSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0F0F10] text-[#C9A227] text-xs font-semibold uppercase tracking-wider mb-3">
-            <Star className="w-3.5 h-3.5 fill-[#C9A227]" />
-            <span>Google Reviews</span>
-          </div>
-          <h2 className="section-headline font-serif font-bold text-[#0F0F10]">
-            Rated 5.0 by 50 Local Clients
+          <span className="eyebrow-label block mb-3">CLIENT REVIEWS</span>
+          <h2 className="section-headline font-serif text-[#0F0F10]">
+            Rated 5.0 by 50 Local <span className="italic text-[#C9A227]">Clients</span>
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-[#666666]">
+          <p className="mt-3 text-[16px] md:text-[17px] leading-[1.65] text-[#666666] font-sans">
             Unfiltered feedback from clients across Krishna Nagar, Lal Quarter, and Azad Nagar.
           </p>
 
@@ -25,8 +22,8 @@ export const ReviewsSection = () => {
                 <Star key={i} className="w-5 h-5 fill-[#C9A227]" />
               ))}
             </div>
-            <span className="font-bold text-[#0F0F10] text-lg">5.0 / 5.0</span>
-            <span className="text-xs text-[#666666]">(50 Reviews on Google Maps)</span>
+            <span className="font-sans font-bold text-[#0F0F10] text-lg">5.0 / 5.0</span>
+            <span className="text-xs font-sans text-[#666666]">(50 Reviews on Google Maps)</span>
           </div>
         </div>
 
@@ -44,7 +41,7 @@ export const ReviewsSection = () => {
                       <Star key={i} className="w-4 h-4 fill-[#C9A227]" />
                     ))}
                   </div>
-                  <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                  <span className="inline-flex items-center gap-1 text-[11px] font-sans font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
                     <CheckCircle className="w-3 h-3" />
                     Verified Client
                   </span>
@@ -52,15 +49,15 @@ export const ReviewsSection = () => {
 
                 <div className="relative">
                   <Quote className="w-7 h-7 text-[#0F0F10]/10 absolute -top-2 -left-2 -z-0" />
-                  <p className="font-serif text-lg sm:text-xl font-bold text-[#0F0F10] leading-snug relative z-10 italic">
+                  <p className="font-serif text-xl sm:text-2xl text-[#0F0F10] leading-snug relative z-10 italic font-medium">
                     &ldquo;{review.quote}&rdquo;
                   </p>
                 </div>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-[#0F0F10]/6 flex items-center justify-between text-xs">
+              <div className="mt-6 pt-4 border-t border-[#0F0F10]/6 flex items-center justify-between text-xs font-sans">
                 <div>
-                  <p className="font-semibold text-[#0F0F10]">
+                  <p className="card-title text-sm text-[#0F0F10]">
                     {review.authorHidden}
                   </p>
                   <p className="text-[#666666]">{review.role}</p>
@@ -77,7 +74,7 @@ export const ReviewsSection = () => {
             href={SALON_INFO.googleReviewsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm font-bold text-[#0F0F10] hover:text-[#C9A227] transition-colors underline decoration-[#C9A227] decoration-2 underline-offset-4"
+            className="inline-flex items-center gap-2 font-sans font-semibold text-[15px] tracking-[0.02em] text-[#0F0F10] hover:text-[#C9A227] transition-colors underline decoration-[#C9A227] decoration-2 underline-offset-4"
           >
             <span>Read all 50 reviews on Google</span>
             <ExternalLink className="w-4 h-4" />

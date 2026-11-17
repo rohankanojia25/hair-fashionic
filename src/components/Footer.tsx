@@ -50,7 +50,7 @@ export const Footer = () => {
   }
 
   return (
-    <footer className="bg-[#0F0F10] text-[#FAF8F5] pt-16 pb-28 md:pb-16 border-t border-[#C9A227]/20">
+    <footer className="bg-[#0F0F10] text-[#FAF8F5] pt-16 pb-28 md:pb-16 border-t border-[#C9A227]/20 font-sans">
       {/* Inject LocalBusiness JSON-LD for Search Engines and crawlers */}
       <script
         type="application/ld+json"
@@ -66,35 +66,35 @@ export const Footer = () => {
                 HF
               </div>
               <div>
-                <span className="font-serif text-2xl font-bold tracking-tight text-white block">
+                <span className="font-serif text-2xl font-semibold tracking-tight text-white block">
                   Hair Fashionic
                 </span>
-                <span className="text-[11px] uppercase tracking-wider text-[#C9A227] font-semibold">
+                <span className="eyebrow-label text-[10px] text-[#C9A227]">
                   Unisex Salon • Krishna Nagar
                 </span>
               </div>
             </div>
 
-            <p className="text-sm text-[#FAF8F5]/75 max-w-sm font-sans leading-relaxed">
+            <p className="text-sm text-[#CFCAC2] max-w-sm font-sans leading-relaxed">
               East Delhi’s trusted destination for precision haircuts, rich hair colours, nourishing spas, and complete grooming. Rated 5.0 by 50 real local clients.
             </p>
 
-            <div className="flex items-center gap-2 pt-1">
+            <div className="flex items-center gap-2 pt-1 font-sans">
               <div className="flex text-[#C9A227]">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-[#C9A227]" />
                 ))}
               </div>
-              <span className="text-xs text-white/80 font-medium">5.0 Star Rating on Google</span>
+              <span className="text-xs text-[#CFCAC2] font-medium">5.0 Star Rating on Google</span>
             </div>
           </div>
 
           {/* Quick Links Col */}
           <div className="lg:col-span-3 space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-[#C9A227]">
+            <h4 className="eyebrow-label text-xs">
               Quick Navigation
             </h4>
-            <ul className="space-y-2 text-sm text-[#FAF8F5]/80">
+            <ul className="space-y-2 text-sm text-[#CFCAC2]">
               <li>
                 <a href="#services" className="hover:text-[#C9A227] transition-colors py-1 inline-block">
                   Services & Pricing
@@ -125,10 +125,10 @@ export const Footer = () => {
 
           {/* Contact Col */}
           <div className="lg:col-span-4 space-y-4">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-[#C9A227]">
+            <h4 className="eyebrow-label text-xs">
               Visit or Book
             </h4>
-            <div className="space-y-2 text-sm text-[#FAF8F5]/80">
+            <div className="space-y-2 text-sm text-[#CFCAC2]">
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#C9A227] shrink-0 mt-1" />
                 <span>
@@ -150,7 +150,7 @@ export const Footer = () => {
                   e.preventDefault()
                   openBooking()
                 }}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[44px] rounded-xl bg-[#C9A227] text-[#0F0F10] hover:bg-[#b8911f] font-bold text-sm transition-colors shadow-sm cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[44px] rounded-xl bg-[#C9A227] text-[#0F0F10] hover:bg-[#b8911f] font-sans font-semibold text-[15px] tracking-[0.02em] transition-colors shadow-sm cursor-pointer"
               >
                 <MessageCircle className="w-4 h-4 fill-current" />
                 <span>Book on WhatsApp</span>
@@ -160,7 +160,7 @@ export const Footer = () => {
         </div>
 
         {/* Bottom Credits & Copyright */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#FAF8F5]/60 text-center sm:text-left">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#CFCAC2]/70 text-center sm:text-left">
           <p>
             © {new Date().getFullYear()} Hair Fashionic. All rights reserved. Lal Quarter Market, Krishna Nagar, Delhi 110051.
           </p>
